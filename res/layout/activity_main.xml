@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="fill_vertical" >
+
+    <TextView
+        android:id="@+id/IDView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="438dp"
+        android:layout_marginTop="280dp"
+        android:text="@string/ID"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/PasswdView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="438dp"
+        android:layout_marginTop="340dp"
+        android:text="@string/passwd"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/IDeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       	android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="570dp"
+        android:layout_marginTop="275dp"
+        android:inputType="text"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/PasswordeditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       	android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="570dp"
+        android:layout_marginTop="335dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/LoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="570dp"
+        android:layout_marginTop="400dp"
+        android:text="@string/login" 
+        android:textSize="20dp"/>
+   	 <Button
+        android:id="@+id/ClearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+		android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="700dp"
+        android:layout_marginTop="400dp"
+        android:text="@string/clear" 
+        android:textSize="20dp"/>
+
+</RelativeLayout>
