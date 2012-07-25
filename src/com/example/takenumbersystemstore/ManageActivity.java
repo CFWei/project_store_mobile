@@ -26,155 +26,107 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
-public class MainActivity extends Activity {
-	public static String ServerURL="http://192.168.20.161/";
-	private String Store_ID,Store_passwd; 
-	SharedPreferences account_settings;
-	Button LoginButton,ClearButton;
+public class ManageActivity extends Activity {
+	String SerialNumbers;
 	private Thread mthread;
 	private Handler mhandler;
 	public ArrayList<HashMap<String,String>> item_list=null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_manage);
         
-        account_settings = getSharedPreferences ("ACCOUNT", 0);
-        Store_ID=account_settings.getString("Store_ID","");
-        Store_passwd=account_settings.getString("Store_passwd","");
-    	final EditText ID=(EditText)findViewById(R.id.IDeditText);
-    	final EditText Passwd=(EditText)findViewById(R.id.PasswordeditText);
+       Intent thisIntent = this.getIntent();
+       Bundle bundle=thisIntent.getExtras();
+       SerialNumbers=bundle.getString("SerialNumbers");
         
-    	ID.setText(Store_ID);
-    	Passwd.setText(Store_passwd);
-        
-    	mhandler=new Handler(){
+        mhandler=new Handler(){
     		public void handleMessage(Message msg){
     			super.handleMessage(msg);
     			switch (msg.what)
     			{
     				case 1:
     					String MsgString = (String)msg.obj;
-    					Toast.makeText(MainActivity.this, MsgString, Toast.LENGTH_LONG).show();
+    					Toast.makeText(ManageActivity.this, MsgString, Toast.LENGTH_LONG).show();
     					break;
     		
     			}
     		}
     		
     	};
-    	
-        LoginButton=(Button)findViewById(R.id.LoginButton);
-        LoginButton.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-			
-				Store_ID=ID.getText().toString();
-				Store_passwd=Passwd.getText().toString();
-				
-				//儲存preference
-				
-				SharedPreferences.Editor PE = account_settings.edit();
-				PE.putString("Store_ID", Store_ID);
-				PE.putString("Store_passwd", Store_passwd);
-				PE.commit();
-				
-				mthread=new Thread(Login_Runnable);
-				mthread.start();
-				
-			}
-		});
         
-        ClearButton=(Button)findViewById(R.id.ClearButton);
-        ClearButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View arg0) 
-			{
-				ID.setText("");
-				Passwd.setText("");
-				SharedPreferences.Editor PE = account_settings.edit();
-				PE.putString("Store_ID", "");
-				PE.putString("Store_passwd", "");
-				PE.commit();
-				
-			
-				
-			}
-		});
         
         
     }
 
     @Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		mthread=new Thread(get_item_list);
+		mthread.start();
+	}
+
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_manage, menu);
         return true;
     }
     
     
-    private Runnable Login_Runnable=new Runnable() {
+	
+	private Runnable get_item_list=new  Runnable() {
 		public void run() 
 		{	
-			
+	
 			try {
-				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("Store_ID",Store_ID));
-				nameValuePairs.add(new BasicNameValuePair("Store_passwd",Store_passwd));
-				String result=connect_to_server("project/store/login.php",nameValuePairs);
-				if(result.equals("fail"))
-				{	
-					String errormessage="Login Fail";
-					Message m=mhandler.obtainMessage(1,errormessage);
-					mhandler.sendMessage(m);
-					
-				}
-				else
-				{
-					
-					Message m=mhandler.obtainMessage(1,result);
-					mhandler.sendMessage(m);
-					
-					Intent intent = new Intent();
-					intent.setClass(MainActivity.this,ManageActivity.class);
-					
-					Bundle bundle=new Bundle();
-					bundle.putString("SerialNumbers",result);
-					intent.putExtras(bundle);
-
-					startActivity(intent);
-					
-					MainActivity.this.finish();
-				}
+					ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
+					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
+					String result=connect_to_server("project/store/get_item_list.php",nameValuePairs);
+					if(result.equals("fail"))
+					{
+						String errormessage="Get Item List Fail";
+						Message m=mhandler.obtainMessage(1,errormessage);
+						mhandler.sendMessage(m);
+					}
+					else
+					{	
+						if(result!="null"||result!="")
+							{
+								String key[]={"ID","Name","State","Value","Now_Value"};
+								item_list=json_deconde(result,key);
+							}
+							
+						Message m=mhandler.obtainMessage(1,result);
+						mhandler.sendMessage(m);
+						
+					}	
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		
-			
 		}
 	};
 	
 	
-   
-    
     public String connect_to_server(String program,ArrayList<NameValuePair> nameValuePairs) throws ClientProtocolException, IOException
     {	
     	//建立一個httpclient
     	HttpClient httpclient = new DefaultHttpClient();
     	//設定httppost的網址
-    	HttpPost httppost = new HttpPost(ServerURL+program);
+    	HttpPost httppost = new HttpPost(MainActivity.ServerURL+program);
     	
     	//加入參數
     	if(nameValuePairs!=null)
@@ -196,8 +148,8 @@ public class MainActivity extends Activity {
 		
 		return result;
     }
-    
-    public ArrayList<HashMap<String,String>> json_deconde(String jsonString,String[] key) throws JSONException
+	
+	public ArrayList<HashMap<String,String>> json_deconde(String jsonString,String[] key) throws JSONException
     {	
     	ArrayList<HashMap<String,String>> item = new ArrayList<HashMap<String,String>>();
     	JSONArray jArray = new JSONArray(jsonString);
@@ -210,11 +162,9 @@ public class MainActivity extends Activity {
 	     	 item.add(temp);
 	     	 //Toast.makeText(this, json_data.getString(key[2]), Toast.LENGTH_SHORT).show();
 		}
-		
-	
-		return item;
-    	
+
+    	return item;
     }
 
-    
+
 }
