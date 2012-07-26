@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
+	<name>TakeNumberSystemStore</name>
+=======
 	<name>com.example.takenumbersystemstore.MainActivity</name>
+>>>>>>> 9b355af8c2655b57aa40b11f89d9db7dce87aabb
 	<comment></comment>
 	<projects>
 	</projects>

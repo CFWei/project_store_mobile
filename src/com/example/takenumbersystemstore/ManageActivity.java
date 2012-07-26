@@ -26,8 +26,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
@@ -54,6 +61,22 @@ public class ManageActivity extends Activity {
     					String MsgString = (String)msg.obj;
     					Toast.makeText(ManageActivity.this, MsgString, Toast.LENGTH_LONG).show();
     					break;
+    				case 2:
+    					//Toast.makeText(ManageActivity.this, "hello", Toast.LENGTH_LONG).show();
+    					GridView gridview = (GridView) findViewById(R.id.gridView1);
+    					SimpleAdapter itemAdapter=new SimpleAdapter(ManageActivity.this,item_list,R.layout.item_view,
+    									   new String[]{"Name","State","Now_Value"},
+    									   new int[]{R.id.Item_Name,R.id.State_Value,R.id.Now_Value});
+    					gridview.setAdapter(itemAdapter);
+    					gridview.setOnItemClickListener(new OnItemClickListener() {
+
+							public void onItemClick(AdapterView<?> arg0,
+									View arg1, int arg2, long arg3) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+    		
     		
     			}
     		}
@@ -103,7 +126,7 @@ public class ManageActivity extends Activity {
 								item_list=json_deconde(result,key);
 							}
 							
-						Message m=mhandler.obtainMessage(1,result);
+						Message m=mhandler.obtainMessage(2);
 						mhandler.sendMessage(m);
 						
 					}	

@@ -34,11 +34,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
-	public static String ServerURL="http://192.168.20.161/";
+	public static String ServerURL="http://192.168.0.100/";
 	private String Store_ID,Store_passwd; 
 	SharedPreferences account_settings;
 	Button LoginButton,ClearButton;
@@ -68,6 +70,7 @@ public class MainActivity extends Activity {
     					String MsgString = (String)msg.obj;
     					Toast.makeText(MainActivity.this, MsgString, Toast.LENGTH_LONG).show();
     					break;
+    				
     		
     			}
     		}
