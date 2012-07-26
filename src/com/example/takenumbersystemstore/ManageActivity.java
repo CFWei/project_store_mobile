@@ -42,7 +42,9 @@ public class ManageActivity extends Activity {
 	String SerialNumbers;
 	private Thread mthread;
 	private Handler mhandler;
-	public ArrayList<HashMap<String,String>> item_list=null;
+	private ItemAdapter itemadapter;
+	private GridView gridview;
+	public static ArrayList<HashMap<String,String>> item_list=null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,22 +64,21 @@ public class ManageActivity extends Activity {
     					Toast.makeText(ManageActivity.this, MsgString, Toast.LENGTH_LONG).show();
     					break;
     				case 2:
+    					setadapter();
+    					break;
+    				case 3:
+    					((ItemAdapter)gridview.getAdapter()).notifyDataSetChanged();
+    					break;
+    				case 4:
     					//Toast.makeText(ManageActivity.this, "hello", Toast.LENGTH_LONG).show();
-    					GridView gridview = (GridView) findViewById(R.id.gridView1);
+    					
+    					gridview = (GridView) findViewById(R.id.gridView1);
     					SimpleAdapter itemAdapter=new SimpleAdapter(ManageActivity.this,item_list,R.layout.item_view,
     									   new String[]{"Name","State","Now_Value"},
     									   new int[]{R.id.Item_Name,R.id.State_Value,R.id.Now_Value});
     					gridview.setAdapter(itemAdapter);
-    					gridview.setOnItemClickListener(new OnItemClickListener() {
-
-							public void onItemClick(AdapterView<?> arg0,
-									View arg1, int arg2, long arg3) {
-								// TODO Auto-generated method stub
-								
-							}
-						});
-    		
-    		
+    					//gridview.setFocusable(false);
+    					gridview.setOnItemClickListener(new itemclicklistener());
     			}
     		}
     		
@@ -102,7 +103,75 @@ public class ManageActivity extends Activity {
         return true;
     }
     
-    
+
+	private void setadapter()
+	{	
+		gridview = (GridView) findViewById(R.id.gridView1);
+		itemadapter=new ItemAdapter(ManageActivity.this,item_list);
+		gridview.setAdapter(itemadapter);
+		gridview.setOnItemClickListener(new itemclicklistener());
+		
+	}
+	
+	
+	class itemclicklistener implements OnItemClickListener{
+
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) 
+		{	
+			NextValue nextvalue=new NextValue();
+			nextvalue.setData(arg2);
+			Thread thread=new Thread(nextvalue);
+			thread.start();
+			
+		}
+		class NextValue implements Runnable
+		{	
+			private int position;
+			public void setData(int getposition)
+			{
+				position=getposition;
+				
+			}
+			
+			public void run() {
+				
+				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
+				String ID=item_list.get(position).get("ID");
+				nameValuePairs.add(new BasicNameValuePair("Item_Id",ID));
+				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
+				try {
+					String result=connect_to_server("/project/store/nextvalue.php",nameValuePairs);
+					if(!result.equals("fail"))
+					{	
+						Log.v("debug",item_list.get(position).get("Now_Value"));
+						item_list.get(position).put("Now_Value",result);
+						
+						Message m=mhandler.obtainMessage(3);
+						mhandler.sendMessage(m);
+					}
+					else
+					{
+						
+						
+					}
+				} catch (ClientProtocolException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}	
+			
+			
+		};
+		
+	}
+	
+	
+
+	
 	
 	private Runnable get_item_list=new  Runnable() {
 		public void run() 

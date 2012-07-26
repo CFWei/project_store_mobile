@@ -40,7 +40,7 @@ import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
-	public static String ServerURL="http://192.168.0.100/";
+	public static String ServerURL="http://192.168.20.161/";
 	private String Store_ID,Store_passwd; 
 	SharedPreferences account_settings;
 	Button LoginButton,ClearButton;
@@ -68,7 +68,6 @@ public class MainActivity extends Activity {
     			{
     				case 1:
     					String MsgString = (String)msg.obj;
-    					Toast.makeText(MainActivity.this, MsgString, Toast.LENGTH_LONG).show();
     					break;
     				
     		

@@ -14,7 +14,7 @@
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         android:descendantFocusability="blocksDescendants"
-        android:numColumns="3" >
+        android:numColumns="2" >
 
     </GridView>
 

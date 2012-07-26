@@ -13,5 +13,6 @@
     <string name="waitnum">等候人數：</string>
     <string name="testitemname">商品名稱</string>
     <string name="testnum">999</string>
+    <string name="next_num">下一號</string>
 
 </resources>

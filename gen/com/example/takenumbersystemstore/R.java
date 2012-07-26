@@ -29,13 +29,12 @@ public final class R {
         public static final int Now_Value=0x7f080008;
         public static final int PasswdView=0x7f080001;
         public static final int PasswordeditText=0x7f080003;
-        public static final int State=0x7f08000b;
-        public static final int State_Value=0x7f08000d;
-        public static final int WaitNum=0x7f08000c;
-        public static final int WaitNum_Value=0x7f08000e;
-        public static final int button1=0x7f08000a;
+        public static final int State=0x7f08000a;
+        public static final int State_Value=0x7f08000c;
+        public static final int WaitNum=0x7f08000b;
+        public static final int WaitNum_Value=0x7f08000d;
         public static final int gridView1=0x7f080006;
-        public static final int menu_settings=0x7f08000f;
+        public static final int menu_settings=0x7f08000e;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -54,6 +53,7 @@ public final class R {
         public static final int hello_world=0x7f050001;
         public static final int login=0x7f050005;
         public static final int menu_settings=0x7f050002;
+        public static final int next_num=0x7f05000d;
         public static final int passwd=0x7f050004;
         public static final int testitemname=0x7f05000b;
         public static final int testnum=0x7f05000c;

@@ -6,9 +6,10 @@
 
     <RelativeLayout
         android:id="@+id/ItemLayout"
-        android:layout_width="420dp"
+        android:layout_width="650dp"
         android:layout_height="300dp"
-         android:background="#FFFFFF" >
+       	android:background="#FFFFFF"
+        android:descendantFocusability="blocksDescendants" >
 
         <TextView
             android:id="@+id/Now_Value"
@@ -19,13 +20,7 @@
             android:text="@string/testnum"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="120dp" />
-		 <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="Button" />
+
         <TextView
             android:id="@+id/Item_Name"
             android:layout_width="wrap_content"
@@ -33,7 +28,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:text="@string/testitemname"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="50dp" />
 
         <TextView
             android:id="@+id/State"
