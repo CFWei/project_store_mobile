@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class ItemAdapter extends BaseAdapter{
 	private Context context;
 	private ArrayList<HashMap<String,String>> item_list;
@@ -46,7 +47,7 @@ public class ItemAdapter extends BaseAdapter{
 
 	
 	public View getView(int arg0, View arg1, ViewGroup arg2) {
-		
+			
 			LayoutInflater layoutinflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View gridview;
 
@@ -65,27 +66,12 @@ public class ItemAdapter extends BaseAdapter{
 			TextView waitnum=(TextView)gridview.findViewById(R.id.WaitNum_Value);
 			waitnum.setText(Integer.toString(watinum_value));
 			
-			/*
-			Button button=(Button)gridview.findViewById(R.id.button1);
-			final int a=arg0;
-			button.setOnClickListener(new OnClickListener() {
-				
-				public void onClick(View v) {
-					Toast.makeText(context,String.valueOf(a) ,Toast.LENGTH_LONG ).show();
-				}
-			});
-			*/
 			
-
-		
-		return gridview;
+			return gridview;
 	}
 
 	@Override
 	public void notifyDataSetChanged() {
-		// TODO Auto-generated method stub
-	
-		//item_list.clear();
 		
 		super.notifyDataSetChanged();
 	}

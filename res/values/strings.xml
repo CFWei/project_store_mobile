@@ -14,5 +14,11 @@
     <string name="testitemname">商品名稱</string>
     <string name="testnum">999</string>
     <string name="next_num">下一號</string>
+    <string name="delete">刪除</string>
+    <string name="modify">更改設定</string>
+    <string name="add_item">新增商品</string>
+    <string name="title_activity_additem">additem</string>
+    <string name="item_name">商品名稱：</string>
+    <string name="submit">確認送出</string>
 
 </resources>
