@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,11 +58,21 @@ public class ItemAdapter extends BaseAdapter{
 			TextView Now_Value=(TextView)gridview.findViewById(R.id.Now_Value);
 			Now_Value.setText(item_list.get(arg0).get("Now_Value"));
 			
+			
+			
+			/*
 			TextView State=(TextView)gridview.findViewById(R.id.State_Value);
 			State.setText(item_list.get(arg0).get("State"));
+			*/
 			
 			TextView Item_name=(TextView)gridview.findViewById(R.id.Item_Name);
 			Item_name.setText(item_list.get(arg0).get("Name"));
+			Log.v("debug", item_list.get(arg0).get("Name"));
+			TextView hint=(TextView)gridview.findViewById(R.id.hint);
+			hint.setText(item_list.get(arg0).get("hintcontent"));
+			
+			TextView takennumber=(TextView)gridview.findViewById(R.id.taken_number_value1);
+			takennumber.setText(item_list.get(arg0).get("Value"));
 			
 			int watinum_value = Integer.parseInt(item_list.get(arg0).get("Value"))-Integer.parseInt(item_list.get(arg0).get("Now_Value"));
 			TextView waitnum=(TextView)gridview.findViewById(R.id.WaitNum_Value);
@@ -70,6 +82,7 @@ public class ItemAdapter extends BaseAdapter{
 			return gridview;
 	}
 
+		
 	@Override
 	public void notifyDataSetChanged() {
 		

@@ -28,7 +28,8 @@
         </activity>
         <activity android:name="additem" >
         </activity>
-        
+       	<activity android:name="itemfullscreen" >
+        </activity>
     </application>
 
 </manifest>

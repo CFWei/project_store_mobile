@@ -113,7 +113,8 @@ public class MainActivity extends Activity {
 			}
 		});
         
-        
+		mthread=new Thread(Login_Runnable);
+		mthread.start();
     }
 
     @Override

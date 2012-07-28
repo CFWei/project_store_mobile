@@ -4,71 +4,108 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ItemLayout"
-        android:layout_width="650dp"
-        android:layout_height="300dp"
-       	android:background="#FFFFFF"
-        android:descendantFocusability="blocksDescendants" >
+        android:layout_width="630dp"
+        android:layout_height="310dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/relative3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3" >
+
+            <TextView
+                android:id="@+id/Item_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/testitemname"
+                android:textSize="60dp"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" >
+
+            <TextView
+                android:id="@+id/Now_Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/testnum"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="150dp"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/Now_Value"
+                android:layout_marginTop="22dp"
+                android:layout_toRightOf="@+id/Now_Value"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FF0000" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" >
+			
+            <TextView
+                android:id="@+id/WaitNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/waitnum"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_alignParentLeft="true"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/WaitNum_Value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/WaitNum"
+                android:hint="@string/test"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="30dp" />
+            
+    
 
         <TextView
-            android:id="@+id/Now_Value"
+            android:id="@+id/taken_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/Item_Name"
-            android:text="@string/testnum"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="120dp" />
-
-        <TextView
-            android:id="@+id/Item_Name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="@string/testitemname"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="50dp" />
-
-        <TextView
-            android:id="@+id/State"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/Now_Value"
-            android:text="@string/Status"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-       
-
-        <TextView
-            android:id="@+id/WaitNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/State"
-            android:text="@string/waitnum"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/State_Value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Now_Value"
-            android:layout_toRightOf="@id/State"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-       <TextView
-            android:id="@+id/WaitNum_Value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/WaitNum"
-            android:layout_below="@+id/State"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_toLeftOf="@+id/taken_number_value1"
+            android:text="@string/taken_number"
+            android:textSize="30dp" />
         
+     	<TextView
+            android:id="@+id/taken_number_value1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/num"
+            android:textSize="30dp" />
+     	
+        <TextView
+            android:id="@+id/num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            
+            android:text="@string/num"
+            android:textSize="30dp" />
+            
+        </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

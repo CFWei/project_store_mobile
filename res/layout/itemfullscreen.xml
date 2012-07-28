@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+  <RelativeLayout
+        android:id="@+id/relativelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:background="#ff0000" >
+    <TextView
+            android:id="@+id/Item_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/testitemname"
+            android:textSize="100dp" />
+   </RelativeLayout>
+   <RelativeLayout
+        android:id="@+id/relativelayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5" 
+        android:background="#00ff00">
+      <TextView
+            android:id="@+id/Now_Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/testnum"
+            android:textSize="300dp" />
+   </RelativeLayout>  
+  <RelativeLayout
+        android:id="@+id/relativelayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2" 
+        android:background="#0000ff">
+   
+        <TextView
+            android:id="@+id/WaitNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="@string/waitnum"
+            android:textSize="70dp" />
+
+        <TextView
+            android:id="@+id/WaitNum_Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/WaitNum"
+            android:textSize="70dp" />
+
+        <TextView
+            android:id="@+id/people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/WaitNum_Value"
+            android:text="@string/people"
+            android:textSize="70dp" />
+
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/relativelayout3"
+            android:layout_toRightOf="@+id/relativelayout3"
+            android:textColor="#FF0000" />
+
+        <TextView
+            android:id="@+id/taken_number_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/num"
+            android:textSize="70dp" />
+
+        <TextView
+            android:id="@+id/taken_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/taken_number_value"
+            android:text="@string/taken_number"
+
+            android:textSize="70dp" />
+
+        <TextView
+            android:id="@+id/num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/num"
+
+            android:textSize="70dp" />
+   </RelativeLayout>
+
+</LinearLayout>

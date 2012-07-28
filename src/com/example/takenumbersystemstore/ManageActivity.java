@@ -28,6 +28,7 @@ import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -37,6 +38,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -44,6 +46,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
@@ -55,7 +58,8 @@ public class ManageActivity extends Activity {
 	private HandlerThread handlerthread;
 	private ItemAdapter itemadapter;
 	private GridView gridview;
-	private Button add_item;
+	private Button add_item,refresh,modify;
+	ImplementItem update_value_runnable=new ImplementItem();
 
 	public static ArrayList<HashMap<String,String>> item_list=null;
     @Override
@@ -86,6 +90,17 @@ public class ManageActivity extends Activity {
 		}
        });
        
+       
+       refresh=(Button)findViewById(R.id.REFRESH);
+       refresh.setOnClickListener(new OnClickListener() {
+		
+		public void onClick(View v) {
+			ManageActivity.this.onResume();	
+			Toast.makeText(ManageActivity.this, "重新刷新頁面", Toast.LENGTH_SHORT).show();
+			
+		}
+	});
+       
        mhandler=new Handler(){
     		public void handleMessage(Message msg){
     			super.handleMessage(msg);
@@ -101,19 +116,17 @@ public class ManageActivity extends Activity {
     				case 3:
     					((ItemAdapter)gridview.getAdapter()).notifyDataSetChanged();
     					break;
+
     					
     			}
     		}
     	};
-    	
-    	
     	handlerthread=new HandlerThread("wait");
     	handlerthread.start();
     	bhandler=new Handler(handlerthread.getLooper());
     	
     	
-    	
-    	
+
     }
 
     @Override
@@ -121,16 +134,34 @@ public class ManageActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		
+		if(handlerthread.isAlive())
+			handlerthread.quit();
+		handlerthread=new HandlerThread("wait");
+    	handlerthread.start();
+    	bhandler=new Handler(handlerthread.getLooper());
+		
 		mthread=new Thread(get_item_list);
 		mthread.start();
 	}
-
+    
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		handlerthread.quit();
+		if(bhandler!=null)
+			bhandler.removeCallbacks(update_value_runnable);
+	}
+    
+    
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_manage, menu);
         return true;
     }
     
+
+
 
 	private void setadapter()
 	{	
@@ -172,13 +203,34 @@ public class ManageActivity extends Activity {
 					if(!result.equals("fail"))
 					{	
 						if(result.equals("-1"))
-							item_list.get(position).put("waitcheck","1");
+						{	
+							if(item_list.get(position).get("waitcheck").equals("0"))
+							{
+								item_list.get(position).put("waitcheck","1");
+								item_list.get(position).put("hintcontent","WAIT NEXT VALUE");
+								item_list.get(position).put("hintvalue","0");
+							}
+							else
+							{
+								item_list.get(position).put("waitcheck","0");
+								item_list.get(position).put("hintcontent","");
+								item_list.get(position).put("hintvalue","0");
+								
+							}
+							
+							Message m=mhandler.obtainMessage(3);
+							mhandler.sendMessage(m);
+						}
 						else
 						{
 							item_list.get(position).put("Now_Value",result);
 							Message m=mhandler.obtainMessage(3);
 							mhandler.sendMessage(m);
+							
+							item_list.get(position).put("hintcontent","NEW VALUE");
+							item_list.get(position).put("hintvalue","1");
 						}
+						
 					}
 					else
 					{
@@ -205,7 +257,7 @@ public class ManageActivity extends Activity {
 		public void run() 
 		{	
 	
-			try {
+			try {	Log.v("debug", "get_item_list");
 					ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
 					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 					String result=connect_to_server("project/store/get_item_list.php",nameValuePairs);
@@ -217,23 +269,32 @@ public class ManageActivity extends Activity {
 					}
 					else
 					{	
-						if(result!="null"||result!="")
-							{
+
+								Log.v("debug", result);
 								String key[]={"ID","Name","State","Value","Now_Value"};
-								item_list=json_deconde(result,key);
+								if(!result.equals("null"))
+								{	
+									item_list=json_deconde(result,key);
 								
-								for(int i=0;i<item_list.size();i++)
-								{
-									item_list.get(i).put("waitcheck","0");
+									for(int i=0;i<item_list.size();i++)
+									{
+										item_list.get(i).put("waitcheck","0");
+										item_list.get(i).put("hintcontent","");
+										item_list.get(i).put("hintvalue","0");
+									}
+									
+									
+									Message m=mhandler.obtainMessage(2);
+									mhandler.sendMessage(m);
+									
+									
+									update_value_runnable.setdata(2,0);
+									bhandler.postDelayed(update_value_runnable,2000);
+								
 								}
-							}
-							
-						Message m=mhandler.obtainMessage(2);
-						mhandler.sendMessage(m);
 						
-						ImplementItem update_value_runnable=new ImplementItem();
-						update_value_runnable.setdata(2,0);
-						bhandler.postDelayed(update_value_runnable,2000);
+							
+					
 						
 					}	
 			} catch (ClientProtocolException e) {
@@ -266,7 +327,20 @@ public class ManageActivity extends Activity {
 		// TODO Auto-generated method stub
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 		switch(item.getItemId())
-		{
+		{	
+			case R.id.itemfullscreen:
+				
+				Intent intent = new Intent();
+				intent.setClass(ManageActivity.this,itemfullscreen.class);
+				String ID=item_list.get(info.position).get("ID");
+				Bundle bundle=new Bundle();
+				bundle.putString("SerialNumbers",SerialNumbers);
+				bundle.putString("ID",ID);
+				
+				intent.putExtras(bundle);
+				
+				startActivity(intent);
+				break;
 			case  R.id.modify:
 				break;
 			case R.id.delete:
@@ -304,16 +378,17 @@ public class ManageActivity extends Activity {
 		public void update_value()
 		{	
 			try {
+				Log.v("debug", "update_value");
 				for(int i=0;i<item_list.size();i++)
 				{	
-					String ID=item_list.get(position).get("ID");
+					String ID=item_list.get(i).get("ID");
 					ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
 					nameValuePairs.add(new BasicNameValuePair("ID",ID));
 					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 					String result=connect_to_server("project/store/update_value.php",nameValuePairs);
 					if(!result.equals("fail"))
 					{
-						item_list.get(position).put("Value",result);
+						item_list.get(i).put("Value",result);
 					}
 					else
 					{
@@ -321,12 +396,12 @@ public class ManageActivity extends Activity {
 						Message m=mhandler.obtainMessage(1,message);
 						mhandler.sendMessage(m);
 						
+						
 					}
 					if(item_list.get(i).get("waitcheck").equals("1"))
 					{
 						String value=item_list.get(i).get("Value");
 						String nowvalue=item_list.get(i).get("Now_Value");
-						Log.v("debug", "123");
 					
 						if(Integer.parseInt(value)>Integer.parseInt(nowvalue))
 						{	
@@ -334,20 +409,39 @@ public class ManageActivity extends Activity {
 							nameValuePairs.add(new BasicNameValuePair("Item_Id",ID));
 							nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 							result=connect_to_server("/project/store/nextvalue.php",nameValuePairs);
-							Log.v("debug", "456");
-							Log.v("debug", result);
 							if(!result.equals("fail"))
 							{	
 								item_list.get(i).put("Now_Value", result);
 								item_list.get(i).put("waitcheck","0");
+								item_list.get(i).put("hintcontent","NEW VALUE");
+								item_list.get(i).put("hintvalue","1");
 							}
 						}
 						
 						
 					}
 					
+					if(!item_list.get(i).get("hintvalue").equals("0"))
+					{
+						if(item_list.get(i).get("hintvalue").equals("3"))
+							{
+								item_list.get(i).put("hintcontent","");
+								item_list.get(i).put("hintvalue","0");
+								
+							}
+						else
+							{
+								int count=Integer.parseInt(item_list.get(i).get("hintvalue"));
+								count++;
+								item_list.get(i).put("hintvalue",String.valueOf(count));
+							
+							}
+						
+					}
+					
 					
 				}
+				
 				Message m=mhandler.obtainMessage(3);
 				mhandler.sendMessage(m);
 				
@@ -371,10 +465,15 @@ public class ManageActivity extends Activity {
 			nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 			try {
 				String result=connect_to_server("project/store/delete_item.php",nameValuePairs);
+				
 				if(result.equals("success"))
 				{	
+					item_list.remove(position);
+					Message m=mhandler.obtainMessage(3);
+					mhandler.sendMessage(m);
+					
 					String message="刪除成功 頁面重整";
-					Message m=mhandler.obtainMessage(1,message);
+					m=mhandler.obtainMessage(1,message);
 					mhandler.sendMessage(m);
 					ManageActivity.this.onResume();
 				}

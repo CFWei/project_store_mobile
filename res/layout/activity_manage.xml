@@ -15,6 +15,24 @@
             android:layout_height="wrap_content"
             android:text="@string/add_item"
             android:textSize="50dp" />
+        <Button
+            android:id="@+id/modify_store_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/modify_store_information"
+            android:textSize="50dp" />
+         <Button
+            android:id="@+id/REFRESH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/refresh"
+            android:textSize="50dp" />
+         <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:textSize="50dp" />
     </LinearLayout>
 
     <LinearLayout
