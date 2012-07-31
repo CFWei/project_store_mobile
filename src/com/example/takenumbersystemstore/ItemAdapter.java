@@ -67,7 +67,6 @@ public class ItemAdapter extends BaseAdapter{
 			
 			TextView Item_name=(TextView)gridview.findViewById(R.id.Item_Name);
 			Item_name.setText(item_list.get(arg0).get("Name"));
-			Log.v("debug", item_list.get(arg0).get("Name"));
 			TextView hint=(TextView)gridview.findViewById(R.id.hint);
 			hint.setText(item_list.get(arg0).get("hintcontent"));
 			

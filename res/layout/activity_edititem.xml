@@ -6,30 +6,31 @@
     android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/relativelayout6"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:id="@+id/relative8"
-        android:layout_weight="0.2">
-        
-        
-         <TextView
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"
+        android:orientation="vertical" >
+
+        <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="@string/add_item"
+            android:text="@string/modify_item"
             android:textSize="100dp" />
+
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/relativelayout7"
+        android:id="@+id/relativelayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.8" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -39,24 +40,36 @@
             android:text="@string/item_name"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView1"
-            android:layout_marginTop="31dp"
-            android:layout_toRightOf="@+id/textView1"
-            android:text="@string/submit" />
-
         <EditText
             android:id="@+id/item_name_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView1"
-            android:layout_alignBottom="@+id/textView1"
-            android:layout_alignLeft="@+id/submit"
+            android:layout_alignBaseline="@+id/item_name"
+            android:layout_alignBottom="@+id/item_name"
+            android:layout_toRightOf="@+id/item_name"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/submit_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_marginTop="250dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/submit" />
+
+        <TextView
+            android:id="@+id/item_name_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/item_name"
+            android:layout_toRightOf="@+id/item_name_value"
+            android:text=""
+            android:textColor="#FF0000" />
+
     </RelativeLayout>
 
 </LinearLayout>

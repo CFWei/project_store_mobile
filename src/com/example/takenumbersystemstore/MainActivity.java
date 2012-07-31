@@ -41,7 +41,8 @@ import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
 	public static String ServerURL="http://192.168.0.100/";
-	private String Store_ID,Store_passwd; 
+	private String Store_ID,Store_passwd,AutoLogin;
+	
 	SharedPreferences account_settings;
 	Button LoginButton,ClearButton;
 	private Thread mthread;
@@ -55,6 +56,7 @@ public class MainActivity extends Activity {
         account_settings = getSharedPreferences ("ACCOUNT", 0);
         Store_ID=account_settings.getString("Store_ID","");
         Store_passwd=account_settings.getString("Store_passwd","");
+        AutoLogin=account_settings.getString("AutoLogin", "0");
     	final EditText ID=(EditText)findViewById(R.id.IDeditText);
     	final EditText Passwd=(EditText)findViewById(R.id.PasswordeditText);
         
@@ -89,6 +91,7 @@ public class MainActivity extends Activity {
 				SharedPreferences.Editor PE = account_settings.edit();
 				PE.putString("Store_ID", Store_ID);
 				PE.putString("Store_passwd", Store_passwd);
+				PE.putString("AutoLogin","1");
 				PE.commit();
 				
 				mthread=new Thread(Login_Runnable);
@@ -106,6 +109,7 @@ public class MainActivity extends Activity {
 				SharedPreferences.Editor PE = account_settings.edit();
 				PE.putString("Store_ID", "");
 				PE.putString("Store_passwd", "");
+				PE.putString("AutoLogin","0");
 				PE.commit();
 				
 			
@@ -113,8 +117,13 @@ public class MainActivity extends Activity {
 			}
 		});
         
-		mthread=new Thread(Login_Runnable);
-		mthread.start();
+        if(AutoLogin.equals("1"))
+        	{	
+        		Log.v("debug", AutoLogin);
+        		mthread=new Thread(Login_Runnable);
+        		mthread.start();
+        	}
+        
     }
 
     @Override

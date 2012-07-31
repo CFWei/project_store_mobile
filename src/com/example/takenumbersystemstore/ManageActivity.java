@@ -28,6 +28,7 @@ import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -73,6 +74,7 @@ public class ManageActivity extends Activity {
        gridview = (GridView) findViewById(R.id.gridView1);
        registerForContextMenu(gridview);
        
+      
        
        
        add_item=(Button)findViewById(R.id.add_item1);
@@ -116,11 +118,54 @@ public class ManageActivity extends Activity {
     				case 3:
     					((ItemAdapter)gridview.getAdapter()).notifyDataSetChanged();
     					break;
-
+    				case 4:
+    					SharedPreferences account_settings = getSharedPreferences ("ACCOUNT", 0);
+    					SharedPreferences.Editor PE = account_settings.edit();
+    					PE.putString("AutoLogin","0");
+    					PE.commit();
+    					
+    					Intent intent = new Intent();
+    					intent.setClass(ManageActivity.this,MainActivity.class);
+    					
+    					startActivity(intent);
+    					ManageActivity.this.finish();
+    					break;
     					
     			}
     		}
     	};
+    	
+    	 Button logout=(Button)findViewById(R.id.logout);
+         logout.setOnClickListener(new OnClickListener() {
+  		
+  		public void onClick(View v) 
+  		{
+			Message m=mhandler.obtainMessage(4);
+			mhandler.sendMessage(m);
+			
+  			
+  		}
+  	});
+    	
+         
+        Button modify_store_information=(Button)findViewById(R.id.modify_store_information);
+        modify_store_information.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.setClass(ManageActivity.this,modify_store_information.class);
+				
+				Bundle bundle=new Bundle();
+				bundle.putString("SerialNumbers",SerialNumbers);
+				intent.putExtras(bundle);
+				
+				startActivity(intent);
+				
+				
+				
+			}
+		});
+         
     	handlerthread=new HandlerThread("wait");
     	handlerthread.start();
     	bhandler=new Handler(handlerthread.getLooper());
@@ -257,7 +302,8 @@ public class ManageActivity extends Activity {
 		public void run() 
 		{	
 	
-			try {	Log.v("debug", "get_item_list");
+			try {	
+					Log.v("debug", "get_item_list");
 					ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
 					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 					String result=connect_to_server("project/store/get_item_list.php",nameValuePairs);
@@ -270,7 +316,7 @@ public class ManageActivity extends Activity {
 					else
 					{	
 
-								Log.v("debug", result);
+								
 								String key[]={"ID","Name","State","Value","Now_Value"};
 								if(!result.equals("null"))
 								{	
@@ -326,22 +372,26 @@ public class ManageActivity extends Activity {
 	{
 		// TODO Auto-generated method stub
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		Intent intent = new Intent();
+		String ID=item_list.get(info.position).get("ID");
+		Bundle bundle=new Bundle();
 		switch(item.getItemId())
 		{	
 			case R.id.itemfullscreen:
 				
-				Intent intent = new Intent();
+				
 				intent.setClass(ManageActivity.this,itemfullscreen.class);
-				String ID=item_list.get(info.position).get("ID");
-				Bundle bundle=new Bundle();
 				bundle.putString("SerialNumbers",SerialNumbers);
 				bundle.putString("ID",ID);
-				
 				intent.putExtras(bundle);
-				
 				startActivity(intent);
 				break;
 			case  R.id.modify:
+				intent.setClass(ManageActivity.this,edititem.class);
+				bundle.putString("SerialNumbers",SerialNumbers);
+				bundle.putString("ID",ID);
+				intent.putExtras(bundle);
+				startActivity(intent);
 				break;
 			case R.id.delete:
 				ImplementItem delete_item_runnable=new ImplementItem();
@@ -457,6 +507,8 @@ public class ManageActivity extends Activity {
 			e.printStackTrace();
 		}
 		}
+		
+		
 		private void delete_item()
 		{
 			String ID=item_list.get(position).get("ID");
