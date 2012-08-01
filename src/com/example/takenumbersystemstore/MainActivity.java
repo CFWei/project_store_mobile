@@ -40,7 +40,7 @@ import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
-	public static String ServerURL="http://192.168.0.100/";
+	public static String ServerURL="http://192.168.20.161/";
 	private String Store_ID,Store_passwd,AutoLogin;
 	
 	SharedPreferences account_settings;
@@ -70,9 +70,9 @@ public class MainActivity extends Activity {
     			{
     				case 1:
     					String MsgString = (String)msg.obj;
+    					Toast.makeText(MainActivity.this, MsgString, Toast.LENGTH_SHORT).show();
     					break;
-    				
-    		
+
     			}
     		}
     		
@@ -111,9 +111,6 @@ public class MainActivity extends Activity {
 				PE.putString("Store_passwd", "");
 				PE.putString("AutoLogin","0");
 				PE.commit();
-				
-			
-				
 			}
 		});
         
@@ -142,17 +139,25 @@ public class MainActivity extends Activity {
 				nameValuePairs.add(new BasicNameValuePair("Store_ID",Store_ID));
 				nameValuePairs.add(new BasicNameValuePair("Store_passwd",Store_passwd));
 				String result=connect_to_server("project/store/login.php",nameValuePairs);
+				//若取不到serial number
 				if(result.equals("fail"))
 				{	
-					String errormessage="Login Fail";
+					String errormessage="Login Fail(帳號密碼錯誤）";
+					Message m=mhandler.obtainMessage(1,errormessage);
+					mhandler.sendMessage(m);
+					
+				}
+				else if(result.length()!=20)
+				{
+					String errormessage="Can not get store information";
 					Message m=mhandler.obtainMessage(1,errormessage);
 					mhandler.sendMessage(m);
 					
 				}
 				else
-				{
-					
-					Message m=mhandler.obtainMessage(1,result);
+				{	
+					String message="登入成功";
+					Message m=mhandler.obtainMessage(1,message);
 					mhandler.sendMessage(m);
 					
 					Intent intent = new Intent();
@@ -167,9 +172,15 @@ public class MainActivity extends Activity {
 					MainActivity.this.finish();
 				}
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
+				String errormessage="ClientProtocolException";
+				Message m=mhandler.obtainMessage(1,errormessage);
+				mhandler.sendMessage(m);
+
 				e.printStackTrace();
 			} catch (IOException e) {
+				String errormessage="IOException";
+				Message m=mhandler.obtainMessage(1,errormessage);
+				mhandler.sendMessage(m);
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

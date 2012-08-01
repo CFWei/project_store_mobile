@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        android:background="#ff0000" >
+>
     <TextView
             android:id="@+id/Item_Name"
             android:layout_width="wrap_content"
@@ -22,8 +22,7 @@
         android:id="@+id/relativelayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5" 
-        android:background="#00ff00">
+        android:layout_weight="0.5" >
       <TextView
             android:id="@+id/Now_Value"
             android:layout_width="wrap_content"
@@ -37,8 +36,7 @@
         android:id="@+id/relativelayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2" 
-        android:background="#0000ff">
+        android:layout_weight="0.2" >
    
         <TextView
             android:id="@+id/WaitNum"

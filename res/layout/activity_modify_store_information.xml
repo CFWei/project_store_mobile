@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/store_address_value"
             android:layout_alignBottom="@+id/store_address_value"
-            android:layout_toRightOf="@+id/store_address_value"
+            android:layout_toRightOf="@+id/add_hint"
             android:text="@string/convert" />
 		<TextView
             android:id="@+id/longitude"
@@ -120,8 +120,7 @@
 		     android:layout_height="wrap_content"
 		     android:layout_alignBaseline="@+id/longitude"
 		     android:layout_alignBottom="@+id/longitude"
-		     android:layout_toRightOf="@+id/longitude"
-		     android:ems="10"  />
+		     android:layout_toRightOf="@+id/longitude" />
 
 		<TextView
 		    android:id="@+id/latitude"
@@ -140,7 +139,6 @@
 		     android:layout_alignBaseline="@+id/latitude"
 		     android:layout_alignBottom="@+id/latitude"
 		     android:layout_toRightOf="@+id/latitude"
-		     android:ems="10"
 		     />
 
 		<Button
@@ -151,6 +149,47 @@
 		    android:layout_centerHorizontal="true"
 		    android:layout_marginTop="26dp"
 		    android:text="@string/submit" />
+
+		<TextView
+		    android:id="@+id/name_hint"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignTop="@+id/store_name_text"
+		    android:layout_toRightOf="@+id/store_name_value"
+		    android:textColor="#ff0000"
+		    android:text="" />
+		<TextView
+		    android:id="@+id/tel_hint"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignTop="@+id/store_telephone_text"
+		    android:layout_toRightOf="@+id/store_telephone_value"
+		    android:textColor="#ff0000"
+		    android:text="" />
+		<TextView
+		    android:id="@+id/add_hint"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignTop="@+id/store_address"
+		    android:layout_toRightOf="@+id/store_address_value"
+		    android:textColor="#ff0000"
+		    android:text="" />
+		<TextView
+		    android:id="@+id/lon_hint"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignTop="@+id/longitude"
+		    android:layout_toRightOf="@+id/longitude_value"
+		    android:textColor="#ff0000"
+		    android:text="" />
+		<TextView
+		    android:id="@+id/lat_hint"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignTop="@+id/latitude"
+		    android:layout_toRightOf="@+id/latitude_value"
+		    android:textColor="#ff0000"
+		    android:text="" />
 
     </RelativeLayout>
 
