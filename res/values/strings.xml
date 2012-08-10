@@ -39,5 +39,13 @@
     <string name="convert">轉換</string>
     <string name="longitude">經度：</string>
     <string name="latitude">緯度：</string>
+    <string name="ChangeNumber">換號</string>
+    <string name="InputNumber">輸入\n號碼</string>
+    <string name="LookUpClient">查看\n客戶</string>
+    <string name="CustomNumber">號碼</string>
+    <string name="CustomID">客戶ID </string>
+    <string name="NextValue">下一號</string>
+    <string name="SkipValue">跳過</string>
+    <string name="CustomLife">狀態</string>
 
 </resources>

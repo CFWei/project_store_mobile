@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/ShowNumberLayout"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="#808080"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/CustomNumberTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:text="@string/CustomNumber"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/CustomNumberLayout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ShowNumberLayout"
+        android:background="#C0C0C0"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/CustomIDTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="@string/CustomID"
+            android:textSize="30dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+	    <RelativeLayout
+        android:id="@+id/CustomLifeLayout"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/CustomNumberLayout"
+        android:background="#808080"
+        android:orientation="vertical" >
+     <TextView
+            android:id="@+id/CustomLifeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:text="@string/CustomLife"
+            android:textSize="30dp" />
+        
+        
+    </RelativeLayout>
+</RelativeLayout>

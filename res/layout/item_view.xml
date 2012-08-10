@@ -1,71 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ItemLayoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ItemLayout"
         android:layout_width="630dp"
         android:layout_height="310dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical" >
-
-        <RelativeLayout
-            android:id="@+id/relative3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3" >
-
-            <TextView
-                android:id="@+id/Item_Name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/testitemname"
-                android:textSize="60dp"
-                android:layout_centerInParent="true" />
-        </RelativeLayout>
+        android:background="#FFFFFF" >
 
         <RelativeLayout
             android:id="@+id/relativelayout4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" >
+            android:layout_width="438dp"
+            android:layout_height="190dp"
+            android:layout_below="@+id/ItemNameLayout" >
 
-            <TextView
-                android:id="@+id/Now_Value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/testnum"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="150dp"
-                android:layout_centerInParent="true" />
+            <RelativeLayout
+                android:id="@+id/NumberRelativeLayout"
+                android:layout_width="430dp"
+                android:layout_height="match_parent" >
 
-            <TextView
-                android:id="@+id/hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/Now_Value"
-                android:layout_marginTop="22dp"
-                android:layout_toRightOf="@+id/Now_Value"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FF0000" />
+                <TextView
+                    android:id="@+id/Now_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/testnum"
+                    android:textSize="150dp" />
 
+                <TextView
+                    android:id="@+id/hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/Now_Value"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF0000" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/relativelayout6"
-            android:layout_width="match_parent"
+            android:id="@+id/ItemInformationLayout"
+            android:layout_width="430dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2" >
-			
+            android:layout_below="@+id/relativelayout4" >
+
             <TextView
                 android:id="@+id/WaitNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:text="@string/waitnum"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_alignParentLeft="true"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
@@ -77,35 +66,91 @@
                 android:hint="@string/test"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="30dp" />
-            
-    
 
-        <TextView
-            android:id="@+id/taken_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/taken_number_value1"
-            android:text="@string/taken_number"
-            android:textSize="30dp" />
-        
-     	<TextView
-            android:id="@+id/taken_number_value1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/num"
-            android:textSize="30dp" />
-     	
-        <TextView
-            android:id="@+id/num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            
-            android:text="@string/num"
-            android:textSize="30dp" />
-            
+            <TextView
+                android:id="@+id/taken_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/taken_number_value1"
+                android:text="@string/taken_number"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/taken_number_value1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/num"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/num"
+                android:textSize="30dp" />
         </RelativeLayout>
 
-    </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/ItemNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/relativelayout4" >
+
+            <TextView
+                android:id="@+id/Item_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/testitemname"
+                android:textSize="50dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ItemButtonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ItemInformationLayout"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/NextValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:text="@string/NextValue"
+                android:textSize="40dp" />
+
+            <Button
+                android:id="@+id/SkipValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/SkipValue"
+                android:layout_weight="0.45"
+                android:textSize="40dp" />
+
+            <Button
+                android:id="@+id/InputNumberButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:text="@string/InputNumber"
+                android:textSize="30dp" />
+
+            <Button
+                android:id="@+id/LookUpClientButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:text="@string/LookUpClient"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

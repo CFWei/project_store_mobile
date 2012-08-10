@@ -21,18 +21,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,6 +51,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,9 +59,10 @@ import android.support.v4.app.NavUtils;
 
 @SuppressLint("ParserError")
 public class ManageActivity extends Activity {
-	String SerialNumbers;
+	static String SerialNumbers;
 	private Thread mthread;
-	private Handler mhandler,bhandler;
+	private static Handler mhandler;
+	private static Handler bhandler;
 	private HandlerThread handlerthread;
 	private ItemAdapter itemadapter;
 	private GridView gridview;
@@ -72,11 +79,9 @@ public class ManageActivity extends Activity {
        Bundle bundle=thisIntent.getExtras();
        SerialNumbers=bundle.getString("SerialNumbers");
        gridview = (GridView) findViewById(R.id.gridView1);
-       registerForContextMenu(gridview);
+       //registerForContextMenu(gridview);
        
-      
-       
-       
+
        add_item=(Button)findViewById(R.id.add_item1);
        add_item.setOnClickListener(new OnClickListener() {
 		
@@ -130,6 +135,29 @@ public class ManageActivity extends Activity {
     					startActivity(intent);
     					ManageActivity.this.finish();
     					break;
+    				case 5:
+    					ArrayList<HashMap<String,String>> custom=(ArrayList<HashMap<String,String>>)msg.obj;
+    					
+    					LayoutInflater layoutinflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+    					View LookUpCustomView=layoutinflater.inflate(R.layout.lookupcustom, null);
+    					ListView list=(ListView)LookUpCustomView.findViewById(R.id.LookUpCustomListVIew);
+    							
+    					String key[]={"number","custom_id","life"};
+    					
+    					SimpleAdapter simpleAdapter =new SimpleAdapter( 
+   							 ManageActivity.this, 
+   							 custom,
+   							 R.layout.lookupcustomview,
+   							 key,
+   							 new int[] { R.id.CustomNumberTextView,R.id.CustomIDTextView,R.id.CustomLifeTextView} );
+    					list.setAdapter(simpleAdapter);
+    					Builder MyAlertDialog = new AlertDialog.Builder(ManageActivity.this);
+    					MyAlertDialog.setTitle("標題");
+    					MyAlertDialog.setView(LookUpCustomView);
+    					MyAlertDialog.setPositiveButton("關閉",null);
+    					MyAlertDialog.show();
+    					break;
+    						
     					
     			}
     		}
@@ -212,12 +240,12 @@ public class ManageActivity extends Activity {
 	{	
 		itemadapter=new ItemAdapter(ManageActivity.this,item_list);
 		gridview.setAdapter(itemadapter);
-		gridview.setOnItemClickListener(new itemclicklistener());
+		//gridview.setOnItemClickListener(new itemclicklistener());
 		
 	}
 	
 	
-	
+	/*
 	class itemclicklistener implements OnItemClickListener{
 
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) 
@@ -293,9 +321,80 @@ public class ManageActivity extends Activity {
 			}	
 			
 			
-		};
+		}
 		
 	}
+	*/
+	
+	static class  NextValue implements Runnable
+	{	
+		private int position;
+		private String choose;
+		public void setData(int getposition,String mchoose)
+		{
+			position=getposition;
+			choose=mchoose;
+		}
+		
+		public void run() {
+			
+			ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
+			String ID=item_list.get(position).get("ID");
+			nameValuePairs.add(new BasicNameValuePair("Item_Id",ID));
+			nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
+			nameValuePairs.add(new BasicNameValuePair("choose",choose));
+			try {
+				String result=connect_to_server("/project/store/nextvalue.php",nameValuePairs);
+				if(!result.equals("fail"))
+				{	
+					if(result.equals("-1"))
+					{	
+						if(item_list.get(position).get("waitcheck").equals("0"))
+						{
+							item_list.get(position).put("waitcheck","1");
+							item_list.get(position).put("hintcontent","WAIT NEXT VALUE");
+							item_list.get(position).put("hintvalue","0");
+						}
+						else
+						{
+							item_list.get(position).put("waitcheck","0");
+							item_list.get(position).put("hintcontent","");
+							item_list.get(position).put("hintvalue","0");
+							
+						}
+						
+						Message m=mhandler.obtainMessage(3);
+						mhandler.sendMessage(m);
+					}
+					else
+					{
+						item_list.get(position).put("Now_Value",result);
+						Message m=mhandler.obtainMessage(3);
+						mhandler.sendMessage(m);
+						
+						item_list.get(position).put("hintcontent","NEW VALUE");
+						item_list.get(position).put("hintvalue","1");
+					}
+					
+				}
+				else
+				{
+					
+					
+				}
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}	
+		
+		
+	}
+	
 	
 	
 	private Runnable get_item_list=new  Runnable() {
@@ -315,8 +414,6 @@ public class ManageActivity extends Activity {
 					}
 					else
 					{	
-
-								
 								String key[]={"ID","Name","State","Value","Now_Value"};
 								if(!result.equals("null"))
 								{	
@@ -327,13 +424,13 @@ public class ManageActivity extends Activity {
 										item_list.get(i).put("waitcheck","0");
 										item_list.get(i).put("hintcontent","");
 										item_list.get(i).put("hintvalue","0");
+										item_list.get(i).put("waitcustomvalue","0");
 									}
 									
 									
 									Message m=mhandler.obtainMessage(2);
 									mhandler.sendMessage(m);
-									
-									
+
 									update_value_runnable.setdata(2,0);
 									bhandler.postDelayed(update_value_runnable,2000);
 								
@@ -356,7 +453,7 @@ public class ManageActivity extends Activity {
 		}
 	};
 	
-	
+/*	
     @Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -405,8 +502,8 @@ public class ManageActivity extends Activity {
 		}
 		return super.onContextItemSelected(item);
 	}
-	
-	private class ImplementItem implements Runnable
+*/	
+	public static class ImplementItem implements Runnable
 	{	
 		private int action;
 		private int position;
@@ -425,6 +522,7 @@ public class ManageActivity extends Activity {
 			else
 				;
 		}
+		
 		public void update_value()
 		{	
 			try {
@@ -445,9 +543,16 @@ public class ManageActivity extends Activity {
 						String message="更新發生錯誤";
 						Message m=mhandler.obtainMessage(1,message);
 						mhandler.sendMessage(m);
-						
-						
 					}
+					
+					
+					nameValuePairs =new ArrayList<NameValuePair>();
+					nameValuePairs.add(new BasicNameValuePair("ID",ID));
+					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
+					nameValuePairs.add(new BasicNameValuePair("Now_Value",item_list.get(i).get("Now_Value")));
+					result=connect_to_server("project/store/GetWaitCustomValue.php",nameValuePairs);
+					item_list.get(i).put("waitcustomvalue",result);
+					
 					if(item_list.get(i).get("waitcheck").equals("1"))
 					{
 						String value=item_list.get(i).get("Value");
@@ -486,10 +591,7 @@ public class ManageActivity extends Activity {
 								item_list.get(i).put("hintvalue",String.valueOf(count));
 							
 							}
-						
 					}
-					
-					
 				}
 				
 				Message m=mhandler.obtainMessage(3);
@@ -527,7 +629,7 @@ public class ManageActivity extends Activity {
 					String message="刪除成功 頁面重整";
 					m=mhandler.obtainMessage(1,message);
 					mhandler.sendMessage(m);
-					ManageActivity.this.onResume();
+					//ManageActivity.this.onResume();
 				}
 				else
 				{
@@ -547,7 +649,7 @@ public class ManageActivity extends Activity {
 	}
 	
 	
-	public String connect_to_server(String program,ArrayList<NameValuePair> nameValuePairs) throws ClientProtocolException, IOException
+	public static String connect_to_server(String program,ArrayList<NameValuePair> nameValuePairs) throws ClientProtocolException, IOException
     {	
     	//建立一個httpclient
     	HttpClient httpclient = new DefaultHttpClient();
@@ -575,7 +677,130 @@ public class ManageActivity extends Activity {
 		return result;
     }
 	
-	public ArrayList<HashMap<String,String>> json_deconde(String jsonString,String[] key) throws JSONException
+	
+	
+	public static class EditNowValue implements Runnable
+	{	
+		String ID;
+		String EditValue;
+		int position;
+		
+		public void setData(String mitemid,String meditvalue,int mposition)
+		{
+			ID=mitemid;
+			EditValue=meditvalue;
+			position=mposition;
+		}
+		
+		public void run() 
+		{
+			
+			
+			try {
+				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("ID",ID));
+				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
+				nameValuePairs.add(new BasicNameValuePair("EditValue",EditValue));
+				String result=connect_to_server("/project/store/editnumber.php",nameValuePairs);
+				if(result.equals("success"))
+				{	
+					item_list.get(position).put("Now_Value", EditValue);
+					item_list.get(position).put("waitcheck","0");
+					item_list.get(position).put("hintcontent","NEW VALUE");
+					item_list.get(position).put("hintvalue","1");
+					
+					Message m=mhandler.obtainMessage(1,"跳號成功");
+					mhandler.sendMessage(m);
+					
+					
+				}
+				else
+				{
+					Message m=mhandler.obtainMessage(1,"跳號失敗");
+					mhandler.sendMessage(m);
+					
+					
+				}
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+	}
+	
+	
+	public static class GetCustomInformation implements Runnable
+	{
+		String ID;
+		public void setData(String mitemid)
+		{
+			ID=mitemid;
+		
+		}
+		
+		public void run() 
+		{
+			
+			try {
+				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
+				
+				nameValuePairs.add(new BasicNameValuePair("ID",ID));
+				nameValuePairs.add(new BasicNameValuePair("store",SerialNumbers));
+				String result=connect_to_server("/project/store/LookUpCustomInformatio.php",nameValuePairs);
+				
+				if(!result.equals("null"))
+				{	
+					
+					String key[]={"number","custom_id","life"};
+					ArrayList<HashMap<String,String>> custom=json_deconde(result,key);
+					
+					
+					Message msg = mhandler.obtainMessage();
+					msg.what=5;
+					msg.obj=custom;
+					mhandler.sendMessage(msg);
+					
+					
+				}
+				else
+				{
+					Message msg = mhandler.obtainMessage();
+					msg.what=1;
+					msg.obj=result;
+					mhandler.sendMessage(msg);
+					
+					
+				}
+				
+				
+				
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+	public static ArrayList<HashMap<String,String>> json_deconde(String jsonString,String[] key) throws JSONException
     {	
     	ArrayList<HashMap<String,String>> item = new ArrayList<HashMap<String,String>>();
     	JSONArray jArray = new JSONArray(jsonString);
