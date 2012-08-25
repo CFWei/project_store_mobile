@@ -58,7 +58,14 @@ public class additem extends Activity {
 						Toast.makeText(additem.this, "新增商品成功", Toast.LENGTH_SHORT).show();
 						additem.this.finish();
 						break;
-    			
+					case 2:
+						Toast.makeText(additem.this, "新增商品失敗", Toast.LENGTH_SHORT).show();
+						additem.this.finish();
+						break;
+					case 3:
+						Toast.makeText(additem.this, "新增商品失敗(有相同名稱的物品存在)", Toast.LENGTH_SHORT).show();
+						additem.this.finish();
+						break;
     			}
         	
         }};
@@ -94,9 +101,20 @@ public class additem extends Activity {
 				Log.v("debug", item_name_value);
 				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 				String result=connect_to_server("project/store/add_item.php",nameValuePairs);
-				if(!result.equals("fail"))
+				if(result.equals("1"))
 				{
 					Message m=mhandler.obtainMessage(1);
+					mhandler.sendMessage(m);
+				}
+				else if(result.equals("-2"))
+				{
+					Message m=mhandler.obtainMessage(3);
+					mhandler.sendMessage(m);
+					
+				}
+				else
+				{
+					Message m=mhandler.obtainMessage(2);
 					mhandler.sendMessage(m);
 				}
 				

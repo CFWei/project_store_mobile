@@ -39,7 +39,6 @@ public class ItemAdapter extends BaseAdapter{
 	{
 		context=mcontext;
 		this.item_list=mitem_list;
-		
 	}
 
 	public int getCount() {
@@ -81,7 +80,8 @@ public class ItemAdapter extends BaseAdapter{
 			ItemLayoutMain.setOnLongClickListener(new OnLongClickListener() {
 				
 				public boolean onLongClick(View arg) {
-					CharSequence[] content={"此商品全螢幕","修改商品資訊","刪除此商品"};
+					//CharSequence[] content={"此商品全螢幕","修改商品資訊","刪除此商品"};
+					CharSequence[] content={"刪除此商品"};
 					Builder MyAlertDialog = new AlertDialog.Builder(context);
 					MyAlertDialog.setTitle("標題");
 					MyAlertDialog.setItems(content, new DialogInterface.OnClickListener() {
@@ -91,7 +91,8 @@ public class ItemAdapter extends BaseAdapter{
 							Bundle bundle=new Bundle();
 							String ID=item_list.get(WhichItem).get("ID");
 							switch(which)
-							{
+							{	
+								/*
 								case 0:
 									intent.setClass(context, itemfullscreen.class);
 									bundle.putString("SerialNumbers",ManageActivity.SerialNumbers);
@@ -106,7 +107,8 @@ public class ItemAdapter extends BaseAdapter{
 									intent.putExtras(bundle);
 									context.startActivity(intent);
 									break;
-								case 2:
+									*/
+								case 0:
 									ManageActivity.ImplementItem delete_item_runnable=new ManageActivity.ImplementItem();
 									delete_item_runnable.setdata(1,WhichItem);
 									Thread delete_item_thread=new Thread(delete_item_runnable);

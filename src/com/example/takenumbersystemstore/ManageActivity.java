@@ -49,10 +49,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
@@ -60,6 +63,9 @@ import android.support.v4.app.NavUtils;
 @SuppressLint("ParserError")
 public class ManageActivity extends Activity {
 	static String SerialNumbers;
+	SimpleAdapter LookUpCustomSimpleAdapter ;
+	ArrayList<HashMap<String,String>> ShowLookUpCustom=new ArrayList<HashMap<String,String>> ();
+	ArrayList<HashMap<String,String>> custom=new ArrayList<HashMap<String,String>>();
 	private Thread mthread;
 	private static Handler mhandler;
 	private static Handler bhandler;
@@ -136,21 +142,53 @@ public class ManageActivity extends Activity {
     					ManageActivity.this.finish();
     					break;
     				case 5:
-    					ArrayList<HashMap<String,String>> custom=(ArrayList<HashMap<String,String>>)msg.obj;
+    					String choose=Integer.toString(msg.arg1);
     					
+    					if(choose.equals("-2"))
+    						custom=(ArrayList<HashMap<String,String>>)msg.obj;
+    					ShowLookUpCustom.clear();
+    					//ShowLookUpCustom.clear();
+    					for(int i=0;i<custom.size();i++)
+    					{	
+    						String checkvalue=custom.get(i).get("life");
+
+    						if(choose.equals("-2")||choose.equals("-1")||checkvalue.equals(choose))
+    						{
+        						HashMap<String,String> temp = new HashMap<String,String>();
+    							temp.put("number",custom.get(i).get("number"));
+    							temp.put("custom_id",custom.get(i).get("custom_id"));
+    							temp.put("life",custom.get(i).get("life"));
+    							ShowLookUpCustom.add(temp);
+    						}
+    						
+    					}
+    					if(!choose.equals("-2"))
+    					{
+    						LookUpCustomSimpleAdapter.notifyDataSetChanged();
+    						break;
+    					}
     					LayoutInflater layoutinflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
     					View LookUpCustomView=layoutinflater.inflate(R.layout.lookupcustom, null);
     					ListView list=(ListView)LookUpCustomView.findViewById(R.id.LookUpCustomListVIew);
     							
     					String key[]={"number","custom_id","life"};
     					
-    					SimpleAdapter simpleAdapter =new SimpleAdapter( 
+    					LookUpCustomSimpleAdapter =new SimpleAdapter( 
    							 ManageActivity.this, 
-   							 custom,
+   							 ShowLookUpCustom,
    							 R.layout.lookupcustomview,
    							 key,
    							 new int[] { R.id.CustomNumberTextView,R.id.CustomIDTextView,R.id.CustomLifeTextView} );
-    					list.setAdapter(simpleAdapter);
+    					
+    					list.setAdapter(LookUpCustomSimpleAdapter);
+    					
+    					String [] m={"全部","未服務","已服務","已刪除"};  
+    					Spinner spinner = (Spinner)LookUpCustomView.findViewById(R.id.LookUpCustomSpinner);
+    					ArrayAdapter<String> adapter=new ArrayAdapter<String>(ManageActivity.this,android.R.layout.simple_spinner_item,m);
+    					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    					spinner.setOnItemSelectedListener(new LookUpCustomOnItemSelectedListener());
+    					spinner.setAdapter(adapter);  
+    					
     					Builder MyAlertDialog = new AlertDialog.Builder(ManageActivity.this);
     					MyAlertDialog.setTitle("標題");
     					MyAlertDialog.setView(LookUpCustomView);
@@ -345,10 +383,10 @@ public class ManageActivity extends Activity {
 			nameValuePairs.add(new BasicNameValuePair("choose",choose));
 			try {
 				String result=connect_to_server("/project/store/nextvalue.php",nameValuePairs);
-				if(!result.equals("fail"))
+				if(!result.equals("-2"))
 				{	
 					if(result.equals("-1"))
-					{	
+					{	/*
 						if(item_list.get(position).get("waitcheck").equals("0"))
 						{
 							item_list.get(position).put("waitcheck","1");
@@ -365,6 +403,7 @@ public class ManageActivity extends Activity {
 						
 						Message m=mhandler.obtainMessage(3);
 						mhandler.sendMessage(m);
+						*/
 					}
 					else
 					{
@@ -526,17 +565,22 @@ public class ManageActivity extends Activity {
 		public void update_value()
 		{	
 			try {
-				Log.v("debug", "update_value");
+				String key[]={"WaitNumValue","State","Value","Now_Value"};
 				for(int i=0;i<item_list.size();i++)
 				{	
+						
 					String ID=item_list.get(i).get("ID");
 					ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
 					nameValuePairs.add(new BasicNameValuePair("ID",ID));
 					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 					String result=connect_to_server("project/store/update_value.php",nameValuePairs);
-					if(!result.equals("fail"))
-					{
-						item_list.get(i).put("Value",result);
+		
+					if(!result.equals("-1"))
+					{	
+						ArrayList<HashMap<String,String>> list=json_deconde(result,key);
+						item_list.get(i).put("Value",list.get(0).get("Value"));
+						item_list.get(i).put("Now_Value",list.get(0).get("Now_Value"));
+						item_list.get(i).put("waitcustomvalue",list.get(0).get("WaitNumValue"));
 					}
 					else
 					{
@@ -545,14 +589,16 @@ public class ManageActivity extends Activity {
 						mhandler.sendMessage(m);
 					}
 					
-					
+					/*
 					nameValuePairs =new ArrayList<NameValuePair>();
 					nameValuePairs.add(new BasicNameValuePair("ID",ID));
 					nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 					nameValuePairs.add(new BasicNameValuePair("Now_Value",item_list.get(i).get("Now_Value")));
 					result=connect_to_server("project/store/GetWaitCustomValue.php",nameValuePairs);
 					item_list.get(i).put("waitcustomvalue",result);
+					*/
 					
+					/*
 					if(item_list.get(i).get("waitcheck").equals("1"))
 					{
 						String value=item_list.get(i).get("Value");
@@ -564,7 +610,7 @@ public class ManageActivity extends Activity {
 							nameValuePairs.add(new BasicNameValuePair("Item_Id",ID));
 							nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 							result=connect_to_server("/project/store/nextvalue.php",nameValuePairs);
-							if(!result.equals("fail"))
+							if(!result.equals("-1"))
 							{	
 								item_list.get(i).put("Now_Value", result);
 								item_list.get(i).put("waitcheck","0");
@@ -575,7 +621,7 @@ public class ManageActivity extends Activity {
 						
 						
 					}
-					
+					*/
 					if(!item_list.get(i).get("hintvalue").equals("0"))
 					{
 						if(item_list.get(i).get("hintvalue").equals("3"))
@@ -593,10 +639,10 @@ public class ManageActivity extends Activity {
 							}
 					}
 				}
-				
+				//notifydatasetchange()
 				Message m=mhandler.obtainMessage(3);
 				mhandler.sendMessage(m);
-				
+				//設定下次更新
 				ImplementItem update_value_runnable=new ImplementItem();
 				update_value_runnable.setdata(2,0);
 				bhandler.postDelayed(update_value_runnable,2000);
@@ -605,6 +651,9 @@ public class ManageActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -702,7 +751,7 @@ public class ManageActivity extends Activity {
 				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 				nameValuePairs.add(new BasicNameValuePair("EditValue",EditValue));
 				String result=connect_to_server("/project/store/editnumber.php",nameValuePairs);
-				if(result.equals("success"))
+				if(result.equals(EditValue))
 				{	
 					item_list.get(position).put("Now_Value", EditValue);
 					item_list.get(position).put("waitcheck","0");
@@ -710,16 +759,12 @@ public class ManageActivity extends Activity {
 					item_list.get(position).put("hintvalue","1");
 					
 					Message m=mhandler.obtainMessage(1,"跳號成功");
-					mhandler.sendMessage(m);
-					
-					
+					mhandler.sendMessage(m);	
 				}
 				else
 				{
 					Message m=mhandler.obtainMessage(1,"跳號失敗");
 					mhandler.sendMessage(m);
-					
-					
 				}
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -764,9 +809,8 @@ public class ManageActivity extends Activity {
 					Message msg = mhandler.obtainMessage();
 					msg.what=5;
 					msg.obj=custom;
+					msg.arg1=-2;
 					mhandler.sendMessage(msg);
-					
-					
 				}
 				else
 				{
@@ -774,8 +818,6 @@ public class ManageActivity extends Activity {
 					msg.what=1;
 					msg.obj=result;
 					mhandler.sendMessage(msg);
-					
-					
 				}
 				
 				
@@ -798,6 +840,27 @@ public class ManageActivity extends Activity {
 		
 	}
 	
+	
+	class LookUpCustomOnItemSelectedListener implements OnItemSelectedListener
+	{
+
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			Message msg = mhandler.obtainMessage();
+			msg.what=5;
+			msg.obj=custom;
+			msg.arg1=arg2-1;
+			mhandler.sendMessage(msg);
+			
+		}
+
+		public void onNothingSelected(AdapterView<?> arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		
+	}
 	
 	
 	public static ArrayList<HashMap<String,String>> json_deconde(String jsonString,String[] key) throws JSONException
