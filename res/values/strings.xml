@@ -47,5 +47,6 @@
     <string name="NextValue">下一號</string>
     <string name="SkipValue">跳過</string>
     <string name="CustomLife">狀態</string>
+    <string name="title_activity_type2">Type2Activity</string>
 
 </resources>

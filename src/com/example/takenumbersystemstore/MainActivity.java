@@ -40,7 +40,7 @@ import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
-	public static String ServerURL="http://192.168.0.100/";
+	public static String ServerURL="http://takeanumber.no-ip.info:800/";
 	private String Store_ID,Store_passwd,AutoLogin;
 	
 	SharedPreferences account_settings;
@@ -48,6 +48,7 @@ public class MainActivity extends Activity {
 	private Thread mthread;
 	private Handler mhandler;
 	public ArrayList<HashMap<String,String>> item_list=null;
+	public ArrayList<HashMap<String,String>> StoreInformation=null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,35 +140,45 @@ public class MainActivity extends Activity {
 				nameValuePairs.add(new BasicNameValuePair("Store_ID",Store_ID));
 				nameValuePairs.add(new BasicNameValuePair("Store_passwd",Store_passwd));
 				String result=connect_to_server("project/store/login.php",nameValuePairs);
-				//若取不到serial number
-				if(result.equals("fail"))
+				
+				//若取不到SerialNumber
+				if(result.equals("-1"))
 				{	
 					String errormessage="Login Fail(帳號密碼錯誤）";
 					Message m=mhandler.obtainMessage(1,errormessage);
 					mhandler.sendMessage(m);
 					
 				}
-				else if(result.length()!=20)
-				{
-					String errormessage="Can not get store information";
-					Message m=mhandler.obtainMessage(1,errormessage);
-					mhandler.sendMessage(m);
-					
-				}
+				//登入成功
 				else
 				{	
+					String[] key={"SerialNumbers","StoreType"};
+					StoreInformation=json_deconde(result,key);
+					
 					String message="登入成功";
 					Message m=mhandler.obtainMessage(1,message);
 					mhandler.sendMessage(m);
 					
 					Intent intent = new Intent();
-					intent.setClass(MainActivity.this,ManageActivity.class);
-					
 					Bundle bundle=new Bundle();
-					bundle.putString("SerialNumbers",result);
-					intent.putExtras(bundle);
-
-					startActivity(intent);
+					//區別是哪種StoreType 開啟對應的Activity
+					if(StoreInformation.get(0).get("StoreType").equals("1"))
+					{	
+						
+						intent.setClass(MainActivity.this,ManageActivity.class);
+						
+						bundle.putString("SerialNumbers",StoreInformation.get(0).get("SerialNumbers"));
+						intent.putExtras(bundle);
+						startActivity(intent);
+					}
+					else
+					{
+						intent.setClass(MainActivity.this,Type2Activity.class);
+						bundle.putString("SerialNumbers",StoreInformation.get(0).get("SerialNumbers"));
+						intent.putExtras(bundle);
+						startActivity(intent);
+					}
+					
 					
 					MainActivity.this.finish();
 				}
@@ -181,6 +192,9 @@ public class MainActivity extends Activity {
 				String errormessage="IOException";
 				Message m=mhandler.obtainMessage(1,errormessage);
 				mhandler.sendMessage(m);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

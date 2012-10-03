@@ -26,15 +26,21 @@
         </activity>
         <activity android:name=".ManageActivity" >
         </activity>
-        <activity android:name="additem"
-            	android:windowSoftInputMode="adjustResize" >
+        <activity
+            android:name="additem"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
         <activity android:name="itemfullscreen" >
         </activity>
         <activity android:name="edititem" >
         </activity>
-        <activity android:name="modify_store_information"
-            	android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name="modify_store_information"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <activity
+            android:name=".Type2Activity"
+            android:windowSoftInputMode="adjustResize" >
         </activity>
     </application>
 
