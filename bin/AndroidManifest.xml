@@ -42,6 +42,10 @@
             android:name=".Type2Activity"
             android:windowSoftInputMode="adjustResize" >
         </activity>
+        <activity
+            android:name=".Type2SettingPage"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
     </application>
 
 </manifest>

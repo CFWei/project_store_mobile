@@ -57,34 +57,55 @@
                         android:textSize="50dp" />
 
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/NowValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textView1"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="0dp"
                         android:text="999"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textSize="40dp" />
+                        android:textSize="50dp" />
 
                     <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/ValueText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/textView1"
-                        android:layout_below="@+id/textView2"
-                        android:layout_marginTop="21dp"
+                        android:layout_below="@+id/WaitValueText"
+                        
                         android:text="已抽號碼:"
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/WaitValueText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/textView3"
-                        android:layout_below="@+id/textView3"
+                        android:layout_alignLeft="@+id/ValueText"
+                        android:layout_below="@+id/NowValue"
+                        android:layout_marginTop="21dp"
                         android:text="等候人數:"
                         android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/WaitValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/WaitValueText"
+                        android:layout_alignBottom="@+id/WaitValueText"
+                        android:layout_toRightOf="@+id/WaitValueText"
+                        android:textSize="20dp"
+                        android:text="999" />
+
+                    <TextView
+                        android:id="@+id/Value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/ValueText"
+                        android:layout_alignBottom="@+id/ValueText"
+                        android:layout_toRightOf="@+id/ValueText"
+                        android:textSize="20dp"
+                        android:text="9999" />
 
                 </RelativeLayout>
 
@@ -96,15 +117,32 @@
                     android:background="#fff" >
 
                     <Button
-                        android:id="@+id/button1"
+                        android:id="@+id/CallTheNumber"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:text="叫號"
                         android:textSize="80dp" />
 
+                    <Button
+                        android:id="@+id/Setting"
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/CallTheNumber"
+                        android:text="設定"
+                        android:textSize="40dp" />
+					  <Button
+                        android:id="@+id/Logout"
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@+id/Setting"
+                        android:layout_below="@+id/CallTheNumber"
+                        android:text="登出"
+                        android:textSize="40dp" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -115,7 +153,8 @@
             android:id="@+id/InformationBlock"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="0.7" >
+            android:layout_weight="0.7"
+            android:background="@drawable/background" >
 
             <ListView
                 android:id="@+id/CustomItemList"
@@ -123,21 +162,23 @@
                 android:layout_height="300dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true"
-                android:background="#fff" >
+                android:background="@drawable/background" >
             </ListView>
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="60dp"
                 android:layout_above="@id/CustomItemList"
-                android:layout_centerHorizontal="true" >
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/border" >
 
                 <RelativeLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.3"
-                    android:background="#999" >
+                    android:layout_weight="0.4"
+                    android:background="@drawable/border1"
+                     >
 
                     <TextView
                         android:id="@+id/textView5"
@@ -147,6 +188,7 @@
                         android:layout_centerVertical="true"
                         android:text="商品名稱"
                         android:textAppearance="?android:attr/textAppearanceLarge"
+                        
                         android:textSize="30dp" />
                 </RelativeLayout>
 
@@ -154,7 +196,8 @@
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:background="#bbb" >
+                    android:background="@drawable/border1"
+                     >
 
                     <TextView
                         android:id="@+id/textView6"
@@ -170,8 +213,8 @@
                 <RelativeLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.4"
-                    android:background="#999" >
+                    android:layout_weight="0.3"
+                   android:background="@drawable/border1" >
 
                     <TextView
                         android:id="@+id/textView7"
@@ -191,14 +234,48 @@
                 android:layout_above="@+id/linearLayout2"
                 android:layout_centerHorizontal="true"
                 android:orientation="vertical" >
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/listView1"
-                android:orientation="vertical" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="281dp"
+                        android:text="這是第"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/NowChooseValueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textView2"
+                        android:text="0"
+                        android:textSize="60dp" />
+
+                     <TextView
+                         android:id="@+id/textView8"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+     					 android:layout_centerVertical="true"
+                         android:layout_toRightOf="@+id/NowChooseValueText"
+                         android:text="號客戶的商品清單"
+                         android:textSize="30dp" />
+
+                </RelativeLayout>
+
             </LinearLayout>
 
         </RelativeLayout>

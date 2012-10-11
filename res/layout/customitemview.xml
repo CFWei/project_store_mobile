@@ -5,15 +5,15 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="900dp"
-        android:layout_height="60dp"
+        android:layout_width="895dp"
+        android:layout_height="30dp"
         android:orientation="horizontal" >
 
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:background="#999"  >
+            android:layout_weight="0.4"
+            android:background="@drawable/border1"  >
 
             <TextView
                 android:id="@+id/CustomItemName"
@@ -30,7 +30,7 @@
          	android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="0.3"
-            android:background="#eee"  >
+            android:background="@drawable/border1"  >
 
             <TextView
                 android:id="@+id/CustomItemCount"
@@ -46,8 +46,8 @@
         <RelativeLayout
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:background="#999" >
+            android:layout_weight="0.3"
+            android:background="@drawable/border1" >
 
             <TextView
                 android:id="@+id/ItemEachPrice"

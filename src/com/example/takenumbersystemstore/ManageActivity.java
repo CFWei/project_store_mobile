@@ -645,6 +645,7 @@ public class ManageActivity extends Activity {
 				//設定下次更新
 				ImplementItem update_value_runnable=new ImplementItem();
 				update_value_runnable.setdata(2,0);
+				
 				bhandler.postDelayed(update_value_runnable,2000);
 				
 		} catch (ClientProtocolException e) {

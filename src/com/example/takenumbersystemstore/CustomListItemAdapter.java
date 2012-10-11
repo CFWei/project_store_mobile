@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,11 @@ public class CustomListItemAdapter extends BaseAdapter
 {
 	private Context context;
 	private ArrayList<HashMap<String,String>> CustomList;
+	
 	public CustomListItemAdapter(Context mcontext,ArrayList<HashMap<String,String>> mCustomList)
 	{
 		context=mcontext;
-		this.CustomList=mCustomList;
+		CustomList=mCustomList;
 		
 	}
 	public int getCount() {
