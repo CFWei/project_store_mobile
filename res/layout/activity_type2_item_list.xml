@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0.08" >
+
+        <TextView
+            android:id="@+id/ItemNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="142dp"
+            android:layout_marginTop="202dp"
+            android:text="商品名稱:"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/ItemPriceText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ItemNameText"
+            android:layout_below="@+id/ItemNameText"
+            android:layout_marginTop="41dp"
+            android:text="商品價格:"
+             android:textSize="20dp" />
+
+        <EditText
+            android:id="@+id/ItemNameValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/ItemNameText"
+            android:layout_alignBottom="@+id/ItemNameText"
+            android:layout_toRightOf="@+id/ItemNameText"
+            android:ems="10" />
+
+        <EditText
+            android:id="@+id/ItemPriceValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/ItemPriceText"
+            android:layout_alignBottom="@+id/ItemPriceText"
+            android:layout_toRightOf="@+id/ItemPriceText"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/AddItemSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ItemPriceValue"
+            android:layout_below="@+id/ItemPriceValue"
+            android:layout_marginLeft="65dp"
+            android:layout_marginTop="24dp"
+            android:text="新增" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout2"
+        android:layout_width="711dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.00"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/TitleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp" >
+
+            <RelativeLayout
+                android:id="@+id/ItemNameTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:background="@drawable/border1" >
+
+                <TextView
+                    android:id="@+id/ItemNameTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="商品名稱"
+                    android:textSize="40dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ItemPriceTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.33"
+                android:background="@drawable/border1" >
+
+                <TextView
+                    android:id="@+id/ItemPriceTitleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="商品價格"
+                    android:textSize="40dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ItemActionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.34"
+                android:background="@drawable/border1" >
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/ItemListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

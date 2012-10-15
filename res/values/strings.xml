@@ -49,5 +49,6 @@
     <string name="CustomLife">狀態</string>
     <string name="title_activity_type2">Type2Activity</string>
     <string name="title_activity_type2_setting_page">Type2SettingPage</string>
+    <string name="title_activity_type2_item_list">Type2ItemList</string>
 
 </resources>

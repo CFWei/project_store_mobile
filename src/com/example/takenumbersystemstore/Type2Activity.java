@@ -41,7 +41,7 @@ import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class Type2Activity extends Activity {
-	public String SerialNumbers;
+	public static String SerialNumbers;
 	public ArrayList<HashMap<String,String>> CustomList=null;
 	public ArrayList<HashMap<String,String>> CustomItemList=null;
 	private Handler mhandler;
@@ -256,7 +256,7 @@ public class Type2Activity extends Activity {
 				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 				String result=connect_to_server("project/store/Type2/UpdateValue.php",nameValuePairs);
 				
-
+				
 				
 				String key[]={"NowValue","Value"};
 				ArrayList<HashMap<String,String>> temp=json_deconde(result, key);
@@ -288,7 +288,7 @@ public class Type2Activity extends Activity {
 				result=connect_to_server("project/store/Type2/GetCustomList.php",nameValuePairs);
 				if(result.equals("-1"))
 				{
-					
+		
 					
 				}
 				else
@@ -358,10 +358,13 @@ public class Type2Activity extends Activity {
 					}
 					
 					
-					Message m=mhandler.obtainMessage(2);
-					mhandler.sendMessage(m);
+			
 				
 				}
+				//呼叫更新waitvalue
+				Message m=mhandler.obtainMessage(2);
+				mhandler.sendMessage(m);
+				
 				handler.removeCallbacks(this);
 				handler.postDelayed(this, 1000000);
 				
