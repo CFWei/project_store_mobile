@@ -50,5 +50,6 @@
     <string name="title_activity_type2">Type2Activity</string>
     <string name="title_activity_type2_setting_page">Type2SettingPage</string>
     <string name="title_activity_type2_item_list">Type2ItemList</string>
+    <string name="title_activity_type2_main">Type2MainActivity</string>
 
 </resources>
