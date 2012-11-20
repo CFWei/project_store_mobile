@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:background="@drawable/border1"
+            android:layout_width="160dp"
+            android:layout_height="41dp" >
+
+            <TextView
+                android:id="@+id/CustomNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="TextView"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/NumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/CustomNumberText"
+                android:text="號"
+                android:textSize="30dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout3"
+            android:layout_width="160dp"
+            android:layout_height="41dp"
+            android:layout_alignParentTop="true"
+            
+            android:background="@drawable/border1"
+            android:layout_toRightOf="@+id/relativeLayout2" >
+
+            <TextView
+                android:id="@+id/QuantityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:text="TextView"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/Quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/QuantityText"
+                
+                android:text="個"
+                android:textSize="30dp" />
+        </RelativeLayout>
+        
+         <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:layout_alignParentTop="true"
+            
+            android:background="@drawable/border1"
+            android:layout_toRightOf="@+id/relativelayout3" >
+          <TextView
+                android:id="@+id/Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text=""
+                android:textColor="#f00"
+                android:textSize="30dp" />
+        </RelativeLayout>
+        
+    </RelativeLayout>
+
+</LinearLayout>

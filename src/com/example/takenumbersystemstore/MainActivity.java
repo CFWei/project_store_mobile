@@ -41,6 +41,7 @@ import android.support.v4.app.NavUtils;
 
 public class MainActivity extends Activity {
 	public static String ServerURL="http://takeanumber.no-ip.info:800/";
+//	public static String ServerURL="http://localhost/";
 	private String Store_ID,Store_passwd,AutoLogin;
 	
 	SharedPreferences account_settings;

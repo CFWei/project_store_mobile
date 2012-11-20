@@ -23,6 +23,12 @@
             android:layout_height="wrap_content"
             android:text="商品清單"
             android:textSize="40dp" />
+        <Button
+            android:id="@+id/Logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="登出"
+            android:textSize="40dp" />
 
     </LinearLayout>
 

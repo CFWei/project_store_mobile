@@ -192,7 +192,7 @@ public class Type2ItemList extends Activity {
 			try 
 			{
 				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",Type2Activity.SerialNumbers));
+				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",Type2MainActivity.SerialNumbers));
 				String result=connect_to_server("project/store/Type2/GetItemList.php",nameValuePairs);
 				String key[]={"ItemName","Price"};
 				ItemList=json_deconde(result,key);
@@ -231,7 +231,6 @@ public class Type2ItemList extends Activity {
 		public int getCount() 
 		{
 		
-
 			return ItemList.size();
 		}
 
