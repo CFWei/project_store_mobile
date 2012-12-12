@@ -89,9 +89,6 @@ public class Type2MainActivity extends Activity {
         .penaltyDeath()
         .build());
         
-        
-        
-        
         mhandler=new Handler(){
 
 			@Override
@@ -199,6 +196,19 @@ public class Type2MainActivity extends Activity {
 					
 					Intent intent = new Intent();
 					intent.setClass(Type2MainActivity.this,MainActivity.class);
+					
+					startActivity(intent);
+					Type2MainActivity.this.finish();
+					
+				}
+				if(Result.equals("EndBusiness")){
+					Intent intent = new Intent();
+					Bundle bundle=new Bundle();
+					intent.setClass(Type2MainActivity.this,Type2CheckActivity.class);
+					
+					bundle.putString("SerialNumbers",SerialNumbers);
+					intent.putExtras(bundle);
+					
 					
 					startActivity(intent);
 					Type2MainActivity.this.finish();
@@ -968,6 +978,12 @@ Runnable UpdateValue=new Runnable() {
 		
     	
     }
+    
+    
+    
+    
+    
+    
     class CallNumber extends AsyncTask<String, Void, String>{
     	
     	int record=-1;
@@ -978,6 +994,12 @@ Runnable UpdateValue=new Runnable() {
 			nameValuePairs.add(new BasicNameValuePair("CallNumber",params[0]));
 			String result=connect_to_server("project/store/Type2/CallNumber.php",nameValuePairs);
 			
+			//waititemlist尚未清空
+			if(result.equals(String.valueOf("-1"))){
+				return "-1";
+			}
+			
+			//找出LastNumber在CustomList的index並紀錄方便之後移除
 			JSONObject jobject = null;
 			String LastNumber = null;
 			try {
@@ -987,22 +1009,14 @@ Runnable UpdateValue=new Runnable() {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-
-			
-			
 			for(int i=0;i<CustomList.size();i++){
 				String temp=CustomList.get(i).get("Number").toString();
-		
 				if(LastNumber.equals(temp)){
-					
 					record=i;
-					
 				}
 				
 			}
-			
-			
+
 			return result;
 		}
 
@@ -1011,6 +1025,13 @@ Runnable UpdateValue=new Runnable() {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			
+			//若result為-1 代表waititemlist未清空
+			if(result.equals("-1")){
+				Toast.makeText(Type2MainActivity.this, "此客戶所需商品尚未製作完成", Toast.LENGTH_SHORT).show();
+				return;
+			}
+			
+			//解JSONObject
 			JSONObject jobject = null;
 			String NowValueTemp = null;
 			try {
@@ -1021,7 +1042,7 @@ Runnable UpdateValue=new Runnable() {
 				e.printStackTrace();
 			}
 			
-			
+			//若NowValueTemp!=NowValue則更新
 			if(!NowValueTemp.equals(NowValue))
 			{	
 				NowValue=NowValueTemp;
@@ -1029,13 +1050,11 @@ Runnable UpdateValue=new Runnable() {
 				NowValueTextView.setText(NowValue);
 				
 			}
-
+			
+			//移除CustomList上的此客戶
 			if(record!=-1){
-				Toast.makeText(Type2MainActivity.this, String.valueOf(record), Toast.LENGTH_SHORT).show();
 				CustomList.remove(record);
-
 				record=-1;
-				
 			}
 			CLA.notifyDataSetChanged();
 			

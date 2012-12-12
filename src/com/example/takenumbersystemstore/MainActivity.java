@@ -176,7 +176,8 @@ public class MainActivity extends Activity {
 					else
 					{
 						//intent.setClass(MainActivity.this,Type2Activity.class);
-						intent.setClass(MainActivity.this,Type2MainActivity.class);
+						//intent.setClass(MainActivity.this,Type2MainActivity.class);
+						intent.setClass(MainActivity.this,Type2CheckActivity.class);
 						bundle.putString("SerialNumbers",StoreInformation.get(0).get("SerialNumbers"));
 						intent.putExtras(bundle);
 						startActivity(intent);

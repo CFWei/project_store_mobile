@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#FFD8AF"
+        android:layout_weight="2" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:text="尚未開始營業"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="200dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="700dp"
+        android:layout_weight="1" >
+
+        <Button
+            android:id="@+id/startBusiness"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_weight="3"
+            android:textSize="80dp"
+            android:text="開始營業" />
+
+        <Button
+            android:id="@+id/EditStoreInformation"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@+id/startBusiness"
+            android:layout_weight="3"
+            android:text="修改商家資訊"
+            android:textSize="80dp" />
+
+       <Button
+           android:id="@+id/Logout"
+           android:layout_width="match_parent"
+           android:layout_height="120dp"
+           android:layout_alignParentBottom="true"
+           android:layout_alignParentLeft="true"
+           android:layout_weight="3"
+           android:text="登出"
+           android:textSize="80dp" />
+
+       <Button
+           android:id="@+id/SettingItemList"
+           android:layout_width="match_parent"
+           android:layout_height="120dp"
+           android:layout_alignParentLeft="true"
+           android:layout_below="@+id/EditStoreInformation"
+           android:layout_weight="3"
+           android:text="商品清單"
+           android:textSize="80dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

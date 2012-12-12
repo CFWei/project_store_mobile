@@ -83,7 +83,7 @@ public class ItemAdapter extends BaseAdapter{
 					//CharSequence[] content={"此商品全螢幕","修改商品資訊","刪除此商品"};
 					CharSequence[] content={"刪除此商品"};
 					Builder MyAlertDialog = new AlertDialog.Builder(context);
-					MyAlertDialog.setTitle("標題");
+					MyAlertDialog.setTitle("商品選單");
 					MyAlertDialog.setItems(content, new DialogInterface.OnClickListener() {
 						
 						public void onClick(DialogInterface dialog, int which) {

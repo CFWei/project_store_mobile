@@ -6,53 +6,46 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/add_item1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/add_item"
-            android:textSize="50dp" />
-        <Button
-            android:id="@+id/modify_store_information"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/modify_store_information"
-            android:textSize="50dp" />
-         <Button
-            android:id="@+id/REFRESH"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/refresh"
-            android:textSize="50dp" />
-
-         <Button
-             android:id="@+id/logout"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/logout"
-             android:textSize="50dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linerlayout1"
+        android:id="@+id/StoreItemGridViewLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_weight="10" >
 
         <GridView
-            android:id="@+id/gridView1"
+            android:id="@+id/StoreItemGridView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#DCDCDC"
+            android:layout_height="match_parent"
+            android:background="#D4E6F8"
             android:descendantFocusability="blocksDescendants"
             android:horizontalSpacing="10dp"
             android:numColumns="2"
             android:verticalSpacing="10dp" >
         </GridView>
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1BA1A3" >
+
+
+
+        <Button
+            android:id="@+id/SelectMenuButton"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="選單"
+            android:textSize="40dp" />
+        <Button
+            android:id="@+id/RefreshButton"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="重整"
+            android:textSize="40dp" />
+    </RelativeLayout>
 
 </LinearLayout>

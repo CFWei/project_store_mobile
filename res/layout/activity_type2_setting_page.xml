@@ -24,10 +24,10 @@
             android:text="商品清單"
             android:textSize="40dp" />
         <Button
-            android:id="@+id/PreferenceSetting"
+            android:id="@+id/EndBusiness"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="喜好設定"
+            android:text="結束營業"
             android:textSize="40dp" />
         <Button
             android:id="@+id/Logout"

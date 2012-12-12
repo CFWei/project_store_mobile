@@ -46,10 +46,13 @@ public class Type2ItemList extends Activity {
 	public ArrayList<HashMap<String,String>> ItemList;
 	private Handler mhandler;
 	private Type2ItemListAdapter TIA;
+	private String SerialNumbers;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type2_item_list);
+        
+        SerialNumbers=this.getIntent().getExtras().getString("SerialNumbers");
         
         mhandler=new Handler(){
     		public void handleMessage(Message msg){
@@ -143,7 +146,7 @@ public class Type2ItemList extends Activity {
 			
 			try {
 				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",Type2Activity.SerialNumbers));
+				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 				nameValuePairs.add(new BasicNameValuePair("ItemName",ItemName));
 				nameValuePairs.add(new BasicNameValuePair("ItemPrice",ItemPrice));
 				String result=connect_to_server("project/store/Type2/AddItem.php",nameValuePairs);
@@ -192,7 +195,7 @@ public class Type2ItemList extends Activity {
 			try 
 			{
 				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",Type2MainActivity.SerialNumbers));
+				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 				String result=connect_to_server("project/store/Type2/GetItemList.php",nameValuePairs);
 				String key[]={"ItemName","Price"};
 				ItemList=json_deconde(result,key);

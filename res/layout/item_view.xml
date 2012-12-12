@@ -8,18 +8,18 @@
     <RelativeLayout
         android:id="@+id/ItemLayout"
         android:layout_width="630dp"
-        android:layout_height="310dp"
+        android:layout_height="330dp"
         android:background="#FFFFFF" >
 
         <RelativeLayout
             android:id="@+id/relativelayout4"
-            android:layout_width="438dp"
-            android:layout_height="190dp"
+            android:layout_width="434dp"
+            android:layout_height="205dp"
             android:layout_below="@+id/ItemNameLayout" >
 
             <RelativeLayout
                 android:id="@+id/NumberRelativeLayout"
-                android:layout_width="430dp"
+                android:layout_width="450dp"
                 android:layout_height="match_parent" >
 
                 <TextView
@@ -39,6 +39,14 @@
                     android:layout_toRightOf="@+id/Now_Value"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF0000" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/Now_Value"
+                    android:background="#FF909090" />
+
             </RelativeLayout>
         </RelativeLayout>
 
@@ -47,6 +55,7 @@
             android:layout_width="430dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/relativelayout4" >
+
 
             <TextView
                 android:id="@+id/WaitNum"
@@ -105,6 +114,14 @@
                 android:layout_centerInParent="true"
                 android:text="@string/testitemname"
                 android:textSize="50dp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="2dip"
+		    android:layout_alignParentLeft="true"
+		    android:layout_below="@+id/Item_Name"
+		    android:background="#FF909090" />
+            
         </RelativeLayout>
 
         <LinearLayout

@@ -72,8 +72,8 @@ public class ManageActivity extends Activity {
 	private HandlerThread handlerthread;
 	private ItemAdapter itemadapter;
 	private GridView gridview;
-	private Button add_item,refresh,modify;
 	ImplementItem update_value_runnable=new ImplementItem();
+	private static final int Logout=1;
 
 	public static ArrayList<HashMap<String,String>> item_list=null;
     @Override
@@ -84,35 +84,11 @@ public class ManageActivity extends Activity {
        Intent thisIntent = this.getIntent();
        Bundle bundle=thisIntent.getExtras();
        SerialNumbers=bundle.getString("SerialNumbers");
-       gridview = (GridView) findViewById(R.id.gridView1);
+       gridview = (GridView) findViewById(R.id.StoreItemGridView);
        //registerForContextMenu(gridview);
        
 
-       add_item=(Button)findViewById(R.id.add_item1);
-       add_item.setOnClickListener(new OnClickListener() {
-		
-		public void onClick(View v) {
-			Intent intent = new Intent();
-			intent.setClass(ManageActivity.this,additem.class);
-			
-			Bundle bundle=new Bundle();
-			bundle.putString("SerialNumbers",SerialNumbers);
-			intent.putExtras(bundle);
-			
-			startActivity(intent);
-		}
-       });
-       
-       
-       refresh=(Button)findViewById(R.id.REFRESH);
-       refresh.setOnClickListener(new OnClickListener() {
-		
-		public void onClick(View v) {
-			ManageActivity.this.onResume();	
-			Toast.makeText(ManageActivity.this, "重新刷新頁面", Toast.LENGTH_SHORT).show();
-			
-		}
-	});
+     
        
        mhandler=new Handler(){
     		public void handleMessage(Message msg){
@@ -147,16 +123,16 @@ public class ManageActivity extends Activity {
     					if(choose.equals("-2"))
     						custom=(ArrayList<HashMap<String,String>>)msg.obj;
     					ShowLookUpCustom.clear();
-    					//ShowLookUpCustom.clear();
+    					
     					for(int i=0;i<custom.size();i++)
     					{	
     						String checkvalue=custom.get(i).get("life");
 
-    						if(choose.equals("-2")||choose.equals("-1")||checkvalue.equals(choose))
+    						if(choose.equals("-1")||checkvalue.equals(choose))
     						{
         						HashMap<String,String> temp = new HashMap<String,String>();
     							temp.put("number",custom.get(i).get("number"));
-    							temp.put("custom_id",custom.get(i).get("custom_id"));
+    							temp.put("PhoneNumber",custom.get(i).get("PhoneNumber"));
     							temp.put("life",custom.get(i).get("life"));
     							ShowLookUpCustom.add(temp);
     						}
@@ -170,8 +146,8 @@ public class ManageActivity extends Activity {
     					LayoutInflater layoutinflater=(LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
     					View LookUpCustomView=layoutinflater.inflate(R.layout.lookupcustom, null);
     					ListView list=(ListView)LookUpCustomView.findViewById(R.id.LookUpCustomListVIew);
-    							
-    					String key[]={"number","custom_id","life"};
+    						
+    					String key[]={"number","PhoneNumber","life"};
     					
     					LookUpCustomSimpleAdapter =new SimpleAdapter( 
    							 ManageActivity.this, 
@@ -186,13 +162,18 @@ public class ManageActivity extends Activity {
     					Spinner spinner = (Spinner)LookUpCustomView.findViewById(R.id.LookUpCustomSpinner);
     					ArrayAdapter<String> adapter=new ArrayAdapter<String>(ManageActivity.this,android.R.layout.simple_spinner_item,m);
     					adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    					
     					spinner.setOnItemSelectedListener(new LookUpCustomOnItemSelectedListener());
     					spinner.setAdapter(adapter);  
+    					spinner.setSelection(1);
     					
+    				
     					Builder MyAlertDialog = new AlertDialog.Builder(ManageActivity.this);
-    					MyAlertDialog.setTitle("標題");
+    					
+    					MyAlertDialog.setTitle("客戶清單");
     					MyAlertDialog.setView(LookUpCustomView);
     					MyAlertDialog.setPositiveButton("關閉",null);
+    			
     					MyAlertDialog.show();
     					break;
     						
@@ -201,36 +182,10 @@ public class ManageActivity extends Activity {
     		}
     	};
     	
-    	 Button logout=(Button)findViewById(R.id.logout);
-         logout.setOnClickListener(new OnClickListener() {
-  		
-  		public void onClick(View v) 
-  		{
-			Message m=mhandler.obtainMessage(4);
-			mhandler.sendMessage(m);
-			
-  			
-  		}
-  	});
     	
-         
-        Button modify_store_information=(Button)findViewById(R.id.modify_store_information);
-        modify_store_information.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.setClass(ManageActivity.this,modify_store_information.class);
-				
-				Bundle bundle=new Bundle();
-				bundle.putString("SerialNumbers",SerialNumbers);
-				intent.putExtras(bundle);
-				
-				startActivity(intent);
-				
-				
-				
-			}
-		});
+    	
+    	setButton();
+       
          
     	handlerthread=new HandlerThread("wait");
     	handlerthread.start();
@@ -271,8 +226,61 @@ public class ManageActivity extends Activity {
         return true;
     }
     
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		switch(requestCode){
+			case Logout:
+					if(resultCode==333){
+						SharedPreferences account_settings = getSharedPreferences ("ACCOUNT", 0);
+						SharedPreferences.Editor PE = account_settings.edit();
+						PE.putString("AutoLogin","0");
+						PE.commit();
+						
+						Intent intent = new Intent();
+						intent.setClass(ManageActivity.this,MainActivity.class);
+						startActivity(intent);
+						ManageActivity.this.finish();
+						
+					}
+					break;
+		
+		}
+	}
 
+	public void setButton() {
+		Button refresh = (Button) findViewById(R.id.RefreshButton);
+		
+		refresh.setOnClickListener(new OnClickListener() {
 
+			public void onClick(View v) {
+				ManageActivity.this.onResume();
+				Toast.makeText(ManageActivity.this, "重新刷新頁面",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+		Button selectMenuButton=(Button) findViewById(R.id.SelectMenuButton);
+		selectMenuButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.setClass(ManageActivity.this, Type1Setting.class);
+
+				Bundle bundle = new Bundle();
+				bundle.putString("SerialNumbers", SerialNumbers);
+				intent.putExtras(bundle);
+
+				startActivityForResult(intent, Logout);
+			}
+		});
+		
+	
+
+	}
 
 	private void setadapter()
 	{	
@@ -803,7 +811,7 @@ public class ManageActivity extends Activity {
 				if(!result.equals("null"))
 				{	
 					
-					String key[]={"number","custom_id","life"};
+					String key[]={"number","custom_id","life","PhoneNumber"};
 					ArrayList<HashMap<String,String>> custom=json_deconde(result,key);
 					
 					
