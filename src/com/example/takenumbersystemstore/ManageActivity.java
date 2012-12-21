@@ -176,6 +176,22 @@ public class ManageActivity extends Activity {
     			
     					MyAlertDialog.show();
     					break;
+    				case 6:
+    					String position=(String)msg.obj;
+    					String ID=item_list.get(Integer.parseInt(position)).get("ID");
+    					
+    					Intent thisIntent = new Intent();
+    					thisIntent.setClass(ManageActivity.this,itemfullscreen.class);
+    					
+    					Bundle bundle=new Bundle();
+    					bundle.putString("SerialNumbers",SerialNumbers);
+    					bundle.putString("ID",ID);
+    					
+    					thisIntent.putExtras(bundle);
+    					
+    					startActivity(thisIntent);
+    					
+    					break;
     						
     					
     			}
@@ -566,8 +582,16 @@ public class ManageActivity extends Activity {
 				delete_item();
 			else if(action==2)
 				update_value();
+			else if(action==3)
+				FullScreen();
 			else
 				;
+		}
+		
+		public void FullScreen(){
+			//Toast.makeText(ManageActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
+			Message m=mhandler.obtainMessage(6,String.valueOf(position));
+			mhandler.sendMessage(m);
 		}
 		
 		public void update_value()

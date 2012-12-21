@@ -114,6 +114,12 @@ public class ItemAdapter extends BaseAdapter{
 									Thread delete_item_thread=new Thread(delete_item_runnable);
 									delete_item_thread.start();
 									break;	
+								case 1:
+									ManageActivity.ImplementItem FullScreen=new ManageActivity.ImplementItem();
+									FullScreen.setdata(3, WhichItem);
+									Thread fullScreenThread=new Thread(FullScreen);
+									fullScreenThread.start();
+									break;
 							}
 							
 						}

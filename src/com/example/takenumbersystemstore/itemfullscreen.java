@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,13 +31,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class itemfullscreen extends Activity {
 	private String SerialNumbers,ID;
 	private Thread mthread;
 	private Handler mhandler,bhandler;
-	public static ArrayList<HashMap<String,String>> item_list=null;
+	public static ArrayList<HashMap<String,String>> itemList=null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,21 +57,6 @@ public class itemfullscreen extends Activity {
 				super.handleMessage(msg);
 				switch(msg.what)
 				{
-					case 1:
-						TextView item_name=(TextView)findViewById(R.id.Item_Name);
-						item_name.setText(item_list.get(0).get("Name"));
-						
-						TextView Now_Value=(TextView)findViewById(R.id.Now_Value);
-						Now_Value.setText(item_list.get(0).get("Now_Value"));
-						
-						TextView takennumber=(TextView)findViewById(R.id.taken_number_value);
-						takennumber.setText(item_list.get(0).get("Value"));
-						
-						int watinum_value = Integer.parseInt(item_list.get(0).get("Value"))-Integer.parseInt(item_list.get(0).get("Now_Value"));
-						TextView waitnum=(TextView)findViewById(R.id.WaitNum_Value);
-						waitnum.setText(Integer.toString(watinum_value));
-						
-						break;
 				
 				}
 			}
@@ -77,9 +64,8 @@ public class itemfullscreen extends Activity {
         	
         	
         };
+        new getItemContent().execute();
         
-        Log.v("debug", SerialNumbers);
-        Log.v("debug", ID);
         
     }
     
@@ -89,9 +75,6 @@ public class itemfullscreen extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
-		mthread=new Thread(get_item_content);
-		mthread.start();
 		
 	}
 
@@ -110,36 +93,64 @@ public class itemfullscreen extends Activity {
         return super.onOptionsItemSelected(item);
     }
     
-    private Runnable get_item_content=new  Runnable() {
-		public void run() 
-		{
-					try {
-						ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
-						nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
-						nameValuePairs.add(new BasicNameValuePair("ID",ID));
-						String result=connect_to_server("project/store/get_item.php",nameValuePairs);
-						String key[]={"ID","Name","State","Value","Now_Value"};
-						item_list=json_deconde(result,key);
-						
-						Message m=mhandler.obtainMessage(1);
-						mhandler.sendMessage(m);
-						
-						
-					} catch (ClientProtocolException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+    
+    class getItemContent extends AsyncTask<Void, Void, String>{
 
+		@Override
+		protected String doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
+			nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
+			nameValuePairs.add(new BasicNameValuePair("ID",ID));
+			String result =null;
+			try {
+				result=connect_to_server("project/store/get_item.php",nameValuePairs);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return result;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+			String key[]={"ID","Name","State","Value","Now_Value"};
+			try {
+				itemList=json_deconde(result,key);
 				
+				//Toast.makeText(itemfullscreen.this,itemList.toString() , Toast.LENGTH_SHORT).show();
+				
+				TextView itemNameTextView=(TextView)findViewById(R.id.ItemName);
+				itemNameTextView.setText(itemList.get(0).get("Name"));
+				
+				TextView nowValTextView=(TextView)findViewById(R.id.NowValue);
+				nowValTextView.setText(itemList.get(0).get("Now_Value"));
+				
+				TextView takeNumberValueTextView=(TextView)findViewById(R.id.taken_number_value1);
+				takeNumberValueTextView.setText(itemList.get(0).get("Value"));
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			
 		}
-    };
+		
+		
+		
+    	
+    }
+    
+    
     
     
     

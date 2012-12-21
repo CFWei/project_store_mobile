@@ -4,29 +4,68 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/AddNewItemButton"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text="新增商品" />
-        <Button
-            android:id="@+id/ModifyStoreInformationButton"
+            android:background="#C7FF91"
+            android:layout_weight="0.1" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#D6FFAF"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="設定"
+                    android:shadowColor="#FF7573"
+                    android:textColor="#FF5755"
+                    android:textSize="110dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text="修改商家資訊" />
-        <Button
-            android:id="@+id/LogoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:text="登出" />
+            android:layout_weight="0.8"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/AddNewItemButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="新增商品"
+                android:textSize="100dp" />
+
+            <Button
+                android:id="@+id/ModifyStoreInformationButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="修改商家資訊"
+                android:textSize="100dp" />
+
+            <Button
+                android:id="@+id/LogoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="登出"
+                android:textSize="100dp" />
+        </LinearLayout>
 
     </LinearLayout>
 

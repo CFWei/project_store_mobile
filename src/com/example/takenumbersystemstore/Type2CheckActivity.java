@@ -85,7 +85,6 @@ public class Type2CheckActivity extends Activity {
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
 			if(result.equals("1")){
-				Toast.makeText(Type2CheckActivity.this, "YA", Toast.LENGTH_SHORT).show();
 				startType2Activity();
 			}
 			else{

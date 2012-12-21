@@ -4,37 +4,76 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="800dp"
-        android:layout_height="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/EditStoreInformation"
+         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="修改商家資訊"
-            android:textSize="40dp" />
+            android:background="#C7FF91"
+            android:layout_weight="0.1" >
 
-        <Button
-            android:id="@+id/SettingItemList"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="#D6FFAF"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="設定"
+                    android:shadowColor="#FF7573"
+                    android:textColor="#FF5755"
+                    android:textSize="110dp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="商品清單"
-            android:textSize="40dp" />
-        <Button
-            android:id="@+id/EndBusiness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="結束營業"
-            android:textSize="40dp" />
-        <Button
-            android:id="@+id/Logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="登出"
-            android:textSize="40dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="5" >
+
+            <Button
+                android:id="@+id/EditStoreInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="修改商家資訊"
+                android:textSize="100dp"  />
+
+            <Button
+                android:id="@+id/SettingItemList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="商品清單"
+                android:textSize="100dp" />
+
+            <Button
+                android:id="@+id/EndBusiness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="結束營業"
+                android:textSize="100dp" />
+
+            <Button
+                android:id="@+id/Logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="登出"
+                android:textSize="100dp" />
+        </LinearLayout>
 
     </LinearLayout>
 

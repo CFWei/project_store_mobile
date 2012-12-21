@@ -3,96 +3,176 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-  <RelativeLayout
-        android:id="@+id/relativelayout1"
+
+    <LinearLayout
+        android:id="@+id/ItemLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.3"
->
-    <TextView
-            android:id="@+id/Item_Name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/testitemname"
-            android:textSize="100dp" />
-   </RelativeLayout>
-   <RelativeLayout
-        android:id="@+id/relativelayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5" >
-      <TextView
-            android:id="@+id/Now_Value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/testnum"
-            android:textSize="300dp" />
-   </RelativeLayout>  
-  <RelativeLayout
-        android:id="@+id/relativelayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.2" >
-   
-        <TextView
-            android:id="@+id/WaitNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/waitnum"
-            android:textSize="70dp" />
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/WaitNum_Value"
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="884dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/ItemNameLayout"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="80dp" >
+
+                <TextView
+                    android:id="@+id/ItemName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/testitemname"
+                    android:textSize="100dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/ItemName"
+                    
+                    android:background="#FF909090" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativelayout4"
+                android:layout_width="match_parent"
+                android:layout_height="205dp"
+                android:layout_weight="5" >
+
+                <RelativeLayout
+                    android:id="@+id/NumberRelativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:id="@+id/NowValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/testnum"
+                        android:textSize="350dp" />
+
+                    <TextView
+                        android:id="@+id/hint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_toRightOf="@+id/Now_Value"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#FF0000" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/NowValue"
+                        android:background="#FF909090" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ItemInformationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/WaitNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                      android:layout_centerVertical="true"
+                    android:text="@string/waitnum"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/WaitNum_Value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/WaitNum"
+                    android:hint="@string/test"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/taken_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/taken_number_value1"
+                    android:text="@string/taken_number"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/taken_number_value1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/num"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/num"
+                    android:textSize="30dp" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ItemButtonLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/WaitNum"
-            android:textSize="70dp" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/people"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/WaitNum_Value"
-            android:text="@string/people"
-            android:textSize="70dp" />
+            <Button
+                android:id="@+id/NextValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="下一號"
+                android:textSize="80dp" />
 
-        <TextView
-            android:id="@+id/hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/relativelayout3"
-            android:layout_toRightOf="@+id/relativelayout3"
-            android:textColor="#FF0000" />
+            <Button
+                android:id="@+id/SkipValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                android:text="跳號"
+                android:textSize="80dp" />
 
-        <TextView
-            android:id="@+id/taken_number_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/num"
-            android:textSize="70dp" />
+            <Button
+                android:id="@+id/InputNumberButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="輸入號碼"
+                android:textSize="80dp" />
 
-        <TextView
-            android:id="@+id/taken_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/taken_number_value"
-            android:text="@string/taken_number"
-
-            android:textSize="70dp" />
-
-        <TextView
-            android:id="@+id/num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="@string/num"
-
-            android:textSize="70dp" />
-   </RelativeLayout>
+            <Button
+                android:id="@+id/LookUpClientButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                android:text="查看客戶"
+                android:textSize="80dp" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
