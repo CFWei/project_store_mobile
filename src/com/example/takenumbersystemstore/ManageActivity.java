@@ -133,7 +133,13 @@ public class ManageActivity extends Activity {
         						HashMap<String,String> temp = new HashMap<String,String>();
     							temp.put("number",custom.get(i).get("number"));
     							temp.put("PhoneNumber",custom.get(i).get("PhoneNumber"));
-    							temp.put("life",custom.get(i).get("life"));
+    							if(custom.get(i).get("life").equals("0"))
+    								temp.put("life","未服務");
+    							if(custom.get(i).get("life").equals("1"))
+    								temp.put("life","已服務");
+    							if(custom.get(i).get("life").equals("2"))
+    								temp.put("life","已刪除");
+    							
     							ShowLookUpCustom.add(temp);
     						}
     						

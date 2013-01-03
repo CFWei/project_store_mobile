@@ -95,9 +95,9 @@ public class Type2ItemList extends Activity {
 						TextView ItemPriceValue=(TextView)findViewById(R.id.ItemPriceValue);
 						String ItemPrice=ItemPriceValue.getText().toString();
 						
-						//AddItem AI=new AddItem(ItemName,ItemPrice);
-						//Thread AddItemThread=new Thread(AI);
-						//AddItemThread.start();
+						AddItem AI=new AddItem(ItemName,ItemPrice);
+						Thread AddItemThread=new Thread(AI);
+						AddItemThread.start();
 					}
 				};
 				MyAlertDialog.setNeutralButton("確認",OkClick );
@@ -316,10 +316,14 @@ public class Type2ItemList extends Activity {
 		{
 			
 			try {
+				
 				ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",Type2Activity.SerialNumbers));
+				nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 				nameValuePairs.add(new BasicNameValuePair("ItemName",ItemName));
 				String result=connect_to_server("project/store/Type2/DeleteItem.php",nameValuePairs);
+				
+				Log.v("debug", SerialNumbers);
+				Log.v("debug", ItemName);
 				
 				if(result.equals("0"))
 				{	

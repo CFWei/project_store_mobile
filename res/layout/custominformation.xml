@@ -9,7 +9,7 @@
         android:id="@+id/CustomDataLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.2" >
+        android:layout_weight="0.15" >
 
         <TextView
             android:id="@+id/CustomDataText1"
@@ -36,6 +36,29 @@
             android:layout_toRightOf="@+id/CustomDataNumber"
             android:text="號"
             android:textSize="40dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="電話:" />
+
+        <TextView
+            android:id="@+id/PhoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView1"
+            android:layout_alignBottom="@+id/textView1"
+            android:layout_toRightOf="@+id/textView1"
+            android:text="" />
+
     </RelativeLayout>
 
     <LinearLayout

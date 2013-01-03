@@ -571,6 +571,7 @@ Runnable UpdateValue=new Runnable() {
 						//取得CustomNumber
 						String CustomNumber=EachCustomData.getString("number");
 						
+						String PhoneNumber=EachCustomData.getString("PhoneNumber");
 						boolean flag=false;
 						int pos=-1;
 						
@@ -622,6 +623,7 @@ Runnable UpdateValue=new Runnable() {
 							//建立一個Hashmap並將其存入
 							HashMap CustomDataContent=new HashMap<String,Object>();
 							CustomDataContent.put("Number", CustomNumber);
+							CustomDataContent.put("PhoneNumber", PhoneNumber);
 							CustomDataContent.put("SelectItem", TakenItemList);
 							CustomDataContent.put("TotalCost", TotalCost);
 							
@@ -1285,6 +1287,11 @@ Runnable UpdateValue=new Runnable() {
 			TextView Number=(TextView)view.findViewById(R.id.CustomDataNumber);
 			String NumberText=CustomList.get(arg0).get("Number").toString();
 			Number.setText(NumberText);
+			
+			//設定PhoneNumber
+			TextView PhoneNumber=(TextView)view.findViewById(R.id.PhoneNumber);
+			String PhoneNumberText=CustomList.get(arg0).get("PhoneNumber").toString();
+			PhoneNumber.setText(PhoneNumberText);
 			
 			//設定TotalCost
 			TextView TotalCostTextView=(TextView)view.findViewById(R.id.TotalCostText);
