@@ -849,7 +849,7 @@ public class ManageActivity extends Activity {
 				{
 					Message msg = mhandler.obtainMessage();
 					msg.what=1;
-					msg.obj=result;
+					msg.obj="尚未有任何客戶";
 					mhandler.sendMessage(msg);
 				}
 				

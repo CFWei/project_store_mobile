@@ -538,8 +538,10 @@ Runnable UpdateValue=new Runnable() {
 			ArrayList<NameValuePair> nameValuePairs =new ArrayList<NameValuePair>();
 			nameValuePairs.add(new BasicNameValuePair("SerialNumbers",SerialNumbers));
 			String result=connect_to_server("project/store/Type2/UpdateValue.php",nameValuePairs);
+			
 			return result;
 		}
+		
 		private void setList(String result){
 			try {	
 				//轉換JSONobject
@@ -704,6 +706,7 @@ Runnable UpdateValue=new Runnable() {
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
+			
 			setList(result);
 			Message m=mhandler.obtainMessage(3);
 			mhandler.sendMessage(m);
@@ -783,6 +786,7 @@ Runnable UpdateValue=new Runnable() {
 				
 			}
 			Log.v("debug", WaitItemList.toString());
+			
 			
 			Message m=mhandler.obtainMessage(2);
 			mhandler.sendMessage(m);
